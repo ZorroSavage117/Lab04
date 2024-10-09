@@ -23,8 +23,8 @@ public:
    void run()
    {
       // move
-      move_knightMove();
-      move_knightAttack();
+      //move_knightMove();
+      //move_knightAttack();
       report("Board");
    }
 private:

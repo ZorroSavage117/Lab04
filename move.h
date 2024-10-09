@@ -16,7 +16,6 @@
 
 class TestMove;
 class TestBoard;
-//enum MoveType { MOVE, ENPASSANT, CASTLE_KING, CASTLE_QUEEN, MOVE_ERROR };
 
 /***************************************************
  * MOVE

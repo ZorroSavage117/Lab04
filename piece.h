@@ -53,7 +53,7 @@ public:
     // constructors and stuff
     Piece() { position = 0xff; fWhite = false; nMoves = 0; lastMove = 0; }
     Piece(const Position& pos, bool isWhite = true) { this->position = pos; if (isWhite) { this->fWhite = true; } else { fWhite = false; } }
-    Piece(int c, int r, bool isWhite = true) { this->position.setCol(c); this->position.setRow(r); if (isWhite) { this->fWhite = true; } else { fWhite = false; } }
+    Piece(int c, int r, bool isWhite = true) { this->position.set(c, r); /*Col(c); this->position.setRow(r);*/ if (isWhite) { this->fWhite = true; } else { fWhite = false; } }
     Piece(const Piece& piece) { this->position = piece.position; this->nMoves = piece.nMoves; this->fWhite = piece.fWhite; this->lastMove = piece.lastMove; }
     virtual ~Piece() {}
     virtual const Piece& operator = (const Piece& rhs);
@@ -96,19 +96,22 @@ class PieceDerived : public Piece
 public:
     PieceDerived() { position = 0xff; fWhite = true; nMoves = 0; lastMove = 0; }
     PieceDerived(const Position& pos, bool isWhite) : Piece(9, 9) { this->position = pos; if (isWhite) { this->fWhite = true; } else { fWhite = false; } }
-    PieceDerived(int c, int r, bool isWhite) : Piece(9, 9) { this->position.setCol(c); this->position.setRow(r); if (isWhite) { this->fWhite = true; } else { fWhite = false; } }
+    PieceDerived(int c, int r, bool isWhite) : Piece(9, 9) { this->position.set(c, r); /*Col(c); this->position.setRow(r);*/ if (isWhite) { this->fWhite = true; } else { fWhite = false; } }
     PieceDerived(const Piece& piece) { this->position = piece.getPosition(); this->fWhite = piece.isWhite(); this->nMoves = piece.getNMoves(); }
     ~PieceDerived() { }
+    // getters
     const Piece& operator = (const Piece& rhs) { this->position = rhs.getPosition(); this->fWhite = rhs.isWhite(); this->nMoves = rhs.getNMoves(); return *this; }
     bool isWhite() { return fWhite; }
     int getNmoves() { return nMoves; }
     int getLastMove() { return lastMove; }
     PieceType getType()            const { return SPACE; }
+    // methods
     void display(ogstream* pgout)  const { assert(false); }
     bool operator == (PieceType pt) const { if (getType() == pt) return true;  else return false; }
     bool operator != (PieceType pt) const { if (getType() != pt) return true;  else return false; }
     bool isMoved() { if (nMoves > 0) return true; else return false; }
     bool justMoved(int currentMove) { if (currentMove - 1 == lastMove) return true; else return false; }
+    // setters
     void setLastMove(int currentMove) { lastMove = currentMove; nMoves += 1; }
 };
 
