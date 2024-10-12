@@ -33,8 +33,8 @@ public:
    Move();
    Move(string smith, bool white = true);
    //Move(const string& rhs) {}
-   bool operator<(const Move& rhs) const { return true; }
-   bool operator==(const Move& rhs) const { return true; }
+   bool operator<(const Move& rhs) const;
+   bool operator==(const Move& rhs) const;
    void read(const string& rhs) {}
    //string getText() const { return std::string(""); }
    //Move(Position s, Position d, MoveType m, PieceType cap, PieceType pro, bool white);

@@ -71,6 +71,7 @@ public:
 
     // setter
     virtual void setLastMove(int currentMove) { lastMove = currentMove; }
+	void setPosition(const Position& pos) { position = pos; }
 
     // overwritten by the various pieces
     virtual PieceType getType()                                    const = 0;
@@ -129,7 +130,7 @@ public:
     PieceDummy() : Piece(0, 0, true) {}
     PieceDummy(const Position& pos, bool isWhite = true) : Piece(pos, isWhite) {}
     PieceDummy(int c, int r, bool isWhite = true) : Piece(c, r, isWhite) {}
-    PieceDummy(const Piece& piece) : Piece(0, 0, true) {}
+    PieceDummy(const Piece& piece) : Piece(0, 0, true) { assert(false); }
     ~PieceDummy() {}
     const Piece& operator = (const Piece& rhs)
     {

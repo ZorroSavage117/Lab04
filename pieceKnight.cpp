@@ -2,7 +2,7 @@
  * Source File:
  *    KNIGHT
  * Author:
- *    <your name here>
+ *    Arlo Jolley & Daniel Carr
  * Summary:
  *    The knight class
  ************************************************************************/
@@ -32,7 +32,7 @@ void Knight::getMoves(set<Move>& moves, const Board& board) const
         {1, 2}, {1, -2}, {-1, 2}, {-1, -2}
     };
 
-    Position currentPos = this->getPosition();
+    const Position currentPos = this->getPosition();
 	Move newMove;
 
     for (int i = 0; i < 8; ++i) {
@@ -42,19 +42,19 @@ void Knight::getMoves(set<Move>& moves, const Board& board) const
 		string smith;
 
         // Check if the new position is within board boundaries
-        if (destPos.isValid()) {
-            PieceDerived target(board[destPos]); // Get piece at new position
-			      // board[newCol, newRow]
+        if (destPos.isValid()) 
+        {
+			const Piece* pTarget = &(board[destPos]); // Get piece at new position
             // If there's no piece, it's a valid move
-            if (target.getType() == PieceType::SPACE)
+            if (pTarget->getType() == PieceType::SPACE)
             {
 				smith = newMove.getText(currentPos, destPos, Move::MOVE);
-                moves.insert(Move());
+                moves.insert(Move(smith));
             }
             // If there's a piece, check if it's an enemy piece for capturing
-            else if (target.isWhite() != this->fWhite) 
+            else if (pTarget->isWhite() != this->fWhite) 
             {
-				smith = newMove.getText(currentPos, destPos, Move::MOVE, target.getType());
+				smith = newMove.getText(currentPos, destPos, Move::MOVE, pTarget->getType());
                 moves.insert(Move(smith)); // Mark as capture
             }
         }
