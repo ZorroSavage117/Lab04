@@ -88,7 +88,9 @@ void Board::display(const Position& posHover, const Position& posSelect) const
  ************************************************/
 Board::Board(ogstream* pgout, bool noreset) : pgout(pgout), numMoves(0)
 {
-
+	for (int r = 0; r < 8; r++)
+		for (int c = 0; c < 8; c++)
+			board[c][r] = nullptr;
 }
 
 
@@ -117,9 +119,34 @@ void Board::assertBoard()
  *         Execute a move according to the contained instructions
  *   INPUT move The instructions of the move
  *********************************************/
-void Board::move(const Move& move)
+void Board::move(Move& move)
 {
+	// move the piece
+	if (move.getCapture() == SPACE)
+	{
+		const Position posSource = move.getSource();
+		const Position posDest = move.getDest();
+		Piece* curMovePiece = board[posSource.getCol()][posSource.getRow()];
+		Piece* destPiece = board[posDest.getCol()][posDest.getRow()];
+		curMovePiece->setPosition(posDest);
+		destPiece->setPosition(posSource);
+		board[posDest.getCol()][posDest.getRow()] = curMovePiece;
+		board[posSource.getCol()][posSource.getRow()] = destPiece;
+	}
+	else
+	{
+		const Position posSource = move.getSource();
+		const Position posDest = move.getDest();
+		Piece* curMovePiece = board[posSource.getCol()][posSource.getRow()];
+		Piece* destPiece = board[posDest.getCol()][posDest.getRow()];
+		Space* space = new Space(posSource);
+		curMovePiece->setPosition(posDest);
+		board[posDest.getCol()][posDest.getRow()] = curMovePiece;
+		board[posSource.getCol()][posSource.getRow()] = space;
+	}
 
+	// update number of moves
+	numMoves++;
 }
 
 /**********************************************

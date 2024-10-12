@@ -479,30 +479,17 @@ PieceType Move::pieceTypeFromLetter(char letter) const
 	}
 }
 
-bool Move::equal(string smith1, string smith2) // compares the numbers of location known as start and dest
+bool Move::operator==(const Move& rhs) const // compares the numbers of location known as start and dest
 {
-	Move smithOne(smith1);
-	Move smithTwo(smith2);
-
 	Position sor1;
 	Position sor2;
 	Position des1;
 	Position des2;
 
-	sor1 = smithOne.getSource();
-	des1 = smithOne.getDest();
-	sor2 = smithTwo.getSource();
-	des2 = smithTwo.getDest();
-
-	/*string sorc1 = smith1.substr(0, 2);
-	string dest1 = smith1.substr(2, 2);
-	string sorc2 = smith2.substr(0, 2);
-	string dest2 = smith2.substr(2, 2);
-
-	Position sor1(sorc1);
-	Position des1(dest1);
-	Position sor2(sorc2);
-	Position des2(dest2);*/
+	sor1 = source;
+	des1 = dest;
+	sor2 = rhs.source;
+	des2 = rhs.dest;
 
 	int sor1c = sor1.getCol();
 	int sor1r = sor1.getRow();
@@ -528,30 +515,17 @@ bool Move::equal(string smith1, string smith2) // compares the numbers of locati
 	}
 }
 
-bool Move::less_than(string smith1, string smith2)
+bool Move::operator<(const Move& rhs) const
 {
-	Move smithOne(smith1);
-	Move smithTwo(smith2);
-
 	Position sor1;
 	Position sor2;
 	Position des1;
 	Position des2;
 
-	sor1 = smithOne.getSource();
-	des1 = smithOne.getDest();
-	sor2 = smithTwo.getSource();
-	des2 = smithTwo.getDest();
-
-	/*string sorc1 = smith1.substr(0, 2);
-	string dest1 = smith1.substr(2, 2);
-	string sorc2 = smith2.substr(0, 2);
-	string dest2 = smith2.substr(2, 2);
-
-	Position sor1(sorc1);
-	Position des1(dest1);
-	Position sor2(sorc2);
-	Position des2(dest2);*/
+	sor1 = source;
+	des1 = dest;
+	sor2 = rhs.source;
+	des2 = rhs.dest;
 
 	int sor1c = sor1.getCol();
 	int sor1r = sor1.getRow();
@@ -567,7 +541,7 @@ bool Move::less_than(string smith1, string smith2)
 	int des1p = (des1r * 8) + des1c;
 	int des2p = (des2r * 8) + des2c;
 
-	if (sor1p == sor2p && des1p < des2p)
+	if (sor1p < sor2p || des1p < des2p)
 	{
 		return true;
 	}

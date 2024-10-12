@@ -40,6 +40,8 @@ void TestPiece::assignment()
    assertUnit(rhs.fWhite == true);
    assertUnit(rhs.lastMove == 3);
    assertUnit(rhs.nMoves == 1);
+   assertUnit(rhs.position.getCol() == 3);
+   assertUnit(rhs.position.getRow() == 3);
 }  // teardown
 
  /*************************************

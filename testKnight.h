@@ -2,7 +2,7 @@
  * Header File:
  *    TEST KNIGHT
  * Author:
- *    <your name here>
+ *    Arlo Jolley & Daniel Carr
  * Summary:
  *    The unit tests for Knight
  ************************************************************************/
