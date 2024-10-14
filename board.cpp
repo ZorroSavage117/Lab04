@@ -38,6 +38,11 @@ void Board::reset(bool fFree)
 	for (int r = 0; r < 8; r++)
 		for (int c = 0; c < 8; c++)
 			board[c][r] = nullptr;
+	board[1][7] = new Knight(Position(1, 7), true);
+	board[6][7] = new Knight(Position(6, 7), true);
+
+	board[1][0] = new Knight(Position(1, 0), false);
+	board[6][0] = new Knight(Position(6, 0), false);
 }
 
 // we really REALLY need to delete this. 
@@ -78,7 +83,16 @@ const Piece& Board::operator[](const Position& pos) const {
  ***********************************************/
 void Board::display(const Position& posHover, const Position& posSelect) const
 {
-
+	
+	pgout->drawBoard();
+	for each (Piece* piece in board)
+	{
+		if ((piece != nullptr) && (piece->getType() != SPACE))
+		{
+			
+			piece->display(pgout);
+		}
+	}
 }
 
 
@@ -91,6 +105,10 @@ Board::Board(ogstream* pgout, bool noreset) : pgout(pgout), numMoves(0)
 	for (int r = 0; r < 8; r++)
 		for (int c = 0; c < 8; c++)
 			board[c][r] = nullptr;
+	if (noreset == false)
+	{
+		reset();
+	}
 }
 
 

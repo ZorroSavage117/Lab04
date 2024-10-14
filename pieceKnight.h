@@ -35,11 +35,11 @@ public:
 	int getNmoves() { return nMoves; }
 	int getLastMove() { return lastMove; }
 	PieceType getType()            const { return KNIGHT; }
-	void display(ogstream* pgout)  const;  //{ assert(false); }
+	void display(ogstream* pgout) const;// {}
 	bool operator == (PieceType pt) const { if (getType() == pt) return true;  else return false; }
 	bool operator != (PieceType pt) const { if (getType() != pt) return true;  else return false; }
 	bool isMoved() { if (nMoves > 0) return true; else return false; }
 	bool justMoved(int currentMove) { if (currentMove - 1 == lastMove) return true; else return false; }
 	void setLastMove(int currentMove) { lastMove = currentMove; nMoves += 1; }
-    void getMoves(set <Move>& moves, const Board& board) const;
+   void getMoves(set <Move>& moves, const Board& board) const;
 };
