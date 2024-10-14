@@ -31,7 +31,7 @@ void Queen::getMoves(set<Move>& moves, const Board& board) const
     const Position currentPos = this->getPosition();
     Move newMove;
 
-    for (int i = 0; i < 4; ++i)
+    for (int i = 0; i < 8; ++i)
     {
         for (int j = 0; j < 7; ++j)
         {
