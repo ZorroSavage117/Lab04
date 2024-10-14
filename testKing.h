@@ -24,7 +24,7 @@ public:
 
    void run()
    {     
-      getMoves_blocked();
+      /*getMoves_blocked();
       getMoves_capture();
       getMoves_free();
       getMoves_end();
@@ -33,7 +33,7 @@ public:
       getMoves_whiteCastleKingMoved();
       getMoves_whiteCastleRookMoved();
 
-      getType();
+      getType();*/
 
       report("King");
    }
