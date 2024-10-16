@@ -254,8 +254,8 @@ void TestKing::getMoves_whiteCastle()
 	assertUnit(moves.size() == 4);  // many possible moves
 	assertUnit(moves.find(Move("e1d1")) != moves.end());
 	assertUnit(moves.find(Move("e1f1")) != moves.end());
-	assertUnit(moves.find(Move("e1g1")) != moves.end());
-	assertUnit(moves.find(Move("e1c1")) != moves.end());
+	assertUnit(moves.find(Move("e1g1c")) != moves.end());
+	assertUnit(moves.find(Move("e1c1C")) != moves.end());
 
 	// TEARDOWN
 	board.board[4][0] = nullptr; // white king
@@ -306,8 +306,8 @@ void TestKing::getMoves_blackCastle()
 	assertUnit(moves.size() == 4);  // many possible moves
 	assertUnit(moves.find(Move("e8d8")) != moves.end());
 	assertUnit(moves.find(Move("e8f8")) != moves.end());
-	assertUnit(moves.find(Move("e8g8")) != moves.end());
-	assertUnit(moves.find(Move("e8c8")) != moves.end());
+	assertUnit(moves.find(Move("e8g8c")) != moves.end());
+	assertUnit(moves.find(Move("e8c8C")) != moves.end());
 
 	// TEARDOWN
 	board.board[4][7] = nullptr; // black king

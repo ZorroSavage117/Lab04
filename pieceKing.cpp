@@ -9,6 +9,7 @@
 
 #include "pieceKing.h"
 #include "board.h"
+#include <iostream>
 
 
  /**********************************************
@@ -54,11 +55,6 @@ void King::getMoves(set<Move>& moves, const Board& board) const
             {
                 smith = newMove.getText(currentPos, destPos, Move::MOVE, pTarget->getType());
                 moves.insert(Move(smith)); // Mark as capture
-                break;
-            }
-            else
-            {
-                break;
             }
         }
     }
@@ -68,29 +64,22 @@ void King::getMoves(set<Move>& moves, const Board& board) const
 	{
 		// Check for castling on the king side
 		if (board[Position(7, currentPos.getRow())].getType() == PieceType::ROOK &&
-			board[Position(7, currentPos.getRow())].getNMoves() == 0 &&
-            board[Position(7, currentPos.getRow())].isWhite() == fWhite)
+			board[Position(7, currentPos.getRow())].getNMoves() == 0)
 		{
-			bool canCastle = true;
+			bool canCastle = false;
 			for (int i = 1; i < 3; ++i)
 			{
-				if (board[Position(currentPos.getCol() + i, currentPos.getRow())].getType() != PieceType::SPACE)
+				if (board[Position(currentPos.getCol() + i, currentPos.getRow())].getType() == PieceType::SPACE || board[Position(currentPos.getCol() + i, currentPos.getRow())].getType() == PieceType::INVALID)
 				{
-					canCastle = false;
-					break;
+					smith = newMove.getText(currentPos, Position(currentPos.getCol() + 2, currentPos.getRow()), Move::CASTLE_KING);
+					moves.insert(Move(smith));
 				}
-			}
-			if (canCastle)
-			{
-				smith = newMove.getText(currentPos, Position(currentPos.getCol() + 2, currentPos.getRow()), Move::CASTLE_KING);
-				moves.insert(Move(smith)); // 
 			}
 		}
 
 		// Check for castling on the queen side
 		if (board[Position(0, currentPos.getRow())].getType() == PieceType::ROOK &&
-			board[Position(0, currentPos.getRow())].getNMoves() == 0 &&
-            board[Position(7, currentPos.getRow())].isWhite() == this->fWhite)
+			board[Position(0, currentPos.getRow())].getNMoves() == 0)
 		{
 			bool canCastle = true;
 			for (int i = 1; i < 4; ++i)
