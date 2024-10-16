@@ -57,9 +57,10 @@ int WINAPI WinMain(
 int main(int argc, char** argv)
 #endif // !_WIN32
 {
-
+#ifndef NDBUG
    // run all the unit tests
    testRunner();
+#endif // !NDBUG
    
    // Instantiate the graphics window
    Interface ui("Chess");    

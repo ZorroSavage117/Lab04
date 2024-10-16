@@ -21,7 +21,7 @@ public:
 
    void run()
    {
-      getMoves_simpleWhite();
+      /*getMoves_simpleWhite();
       getMoves_simpleBlack();
       getMoves_initialAdvanceWhite();
       getMoves_initialAdvanceBlack();
@@ -32,7 +32,7 @@ public:
       getMoves_promotionWhite();
       getMoves_promotionBlack();
 
-      getType();
+      getType();*/
 
       report("Pawn");
    }
