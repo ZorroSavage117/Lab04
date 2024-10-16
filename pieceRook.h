@@ -20,9 +20,9 @@ class Rook : public Piece
 {
 public:
 	Rook() { position = 0xff; fWhite = true; nMoves = 0; lastMove = 0; }
-	Rook(const Position& pos, bool isWhite) : Piece(9, 9) { position = pos; fWhite = isWhite; }
+	Rook(const Position& pos, bool isWhite) : Piece(9, 9) { position = pos; fWhite = isWhite; nMoves = 0; lastMove = 0;}
 	Rook(int c, int r, bool isWhite) : Piece(9, 9) {
-		position.set(c, r); fWhite = isWhite;
+		position.set(c, r); fWhite = isWhite; nMoves = 0; lastMove = 0;
 	}
 	Rook(const Piece& piece) { this->position = piece.getPosition(); this->fWhite = piece.isWhite(); this->nMoves = piece.getNMoves(); }
 	~Rook() { }
