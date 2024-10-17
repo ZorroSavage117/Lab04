@@ -34,7 +34,22 @@
   **************************************/
 void TestPawn::getMoves_simpleWhite()
 {
-   assertUnit(NOT_YET_IMPLEMENTED);
+	// Setup
+	BoardEmpty board;
+	Pawn pawn(1, 3, true);
+	pawn.setNMoves(1);
+	board.board[1][3] = &pawn;
+	set <Move> moves;
+
+	// Exercise
+	pawn.getMoves(moves, board);
+
+	// Verify
+	assertUnit(moves.size() == 1);  // many possible moves
+	assertUnit(moves.find(Move("b4b5")) != moves.end());
+
+	// Teardown
+	board.board[1][3] = nullptr; // white pawn
 }
 
 /*************************************
@@ -56,7 +71,22 @@ void TestPawn::getMoves_simpleWhite()
  **************************************/
 void TestPawn::getMoves_simpleBlack()
 {
-   assertUnit(NOT_YET_IMPLEMENTED);
+	// Setup
+	BoardEmpty board;
+	Pawn pawn(1, 3, false);
+	pawn.setNMoves(1);
+	board.board[1][3] = &pawn;
+	set <Move> moves;
+
+	// Exercise
+	pawn.getMoves(moves, board);
+
+	// Verify
+	assertUnit(moves.size() == 1);  // many possible moves
+	assertUnit(moves.find(Move("b4b3")) != moves.end());
+
+	// Teardown
+	board.board[1][3] = nullptr; // black pawn
 }
 
 
@@ -79,7 +109,22 @@ void TestPawn::getMoves_simpleBlack()
  **************************************/
 void TestPawn::getMoves_initialAdvanceWhite()
 {
-   assertUnit(NOT_YET_IMPLEMENTED);
+	// Setup
+	BoardEmpty board;
+	Pawn pawn(1, 1, true);
+	board.board[1][1] = &pawn;
+	set <Move> moves;
+
+	// Exercise
+	pawn.getMoves(moves, board);
+
+	// Verify
+	assertUnit(moves.size() == 2);  // many possible moves
+	assertUnit(moves.find(Move("b2b3")) != moves.end());
+	assertUnit(moves.find(Move("b2b4")) != moves.end());
+
+	// Teardown
+	board.board[1][1] = nullptr; // white pawn
 }
 
 /*************************************
@@ -101,7 +146,22 @@ void TestPawn::getMoves_initialAdvanceWhite()
  **************************************/
 void TestPawn::getMoves_initialAdvanceBlack()
 {
-   assertUnit(NOT_YET_IMPLEMENTED);
+	// Setup
+	BoardEmpty board;
+	Pawn pawn(2, 6, true);
+	board.board[2][6] = &pawn;
+	set <Move> moves;
+
+	// Exercise
+	pawn.getMoves(moves, board);
+
+	// Verify
+	assertUnit(moves.size() == 2);  // many possible moves
+	assertUnit(moves.find(Move("c7c6")) != moves.end());
+	assertUnit(moves.find(Move("c7c5")) != moves.end());
+
+	// Teardown
+	board.board[2][6] = nullptr; // white pawn
 }
 
 
@@ -124,7 +184,32 @@ void TestPawn::getMoves_initialAdvanceBlack()
  **************************************/
 void TestPawn::getMoves_captureWhite()
 {
-   assertUnit(NOT_YET_IMPLEMENTED);
+	// Setup
+	BoardEmpty board;
+	Pawn pawn1(1, 5, true);
+	board.board[1][5] = &pawn1;
+	Pawn pawn2(0, 6, false);
+	board.board[0][6] = &pawn2;
+	Pawn pawn3(1, 6, false);
+	pawn3.setNMoves(1);
+	board.board[1][6] = &pawn3;
+	Pawn pawn4(2, 6, false);
+	board.board[2][6] = &pawn4;
+	set <Move> moves;
+
+	// Exercise
+	pawn3.getMoves(moves, board);
+
+	// Verify
+	assertUnit(moves.size() == 1);  // many possible moves
+	assertUnit(moves.find(Move("b7b6p")) != moves.end());
+
+	// Teardown
+	board.board[1][5] = nullptr;
+	board.board[0][6] = nullptr;
+	board.board[1][6] = nullptr;
+	board.board[2][6] = nullptr;
+
 }
 
 
@@ -147,7 +232,34 @@ void TestPawn::getMoves_captureWhite()
  **************************************/
 void TestPawn::getMoves_captureBlack()
 {
-   assertUnit(NOT_YET_IMPLEMENTED);
+	// Setup
+	BoardEmpty board;
+	Pawn pawn1(1, 5, false);
+	pawn1.setNMoves(1);
+	board.board[1][5] = &pawn1;
+	Pawn pawn2(0, 4, true);
+	board.board[0][4] = &pawn2;
+	Pawn pawn3(1, 4, true);
+	board.board[1][4] = &pawn3;
+	Pawn pawn4(2, 4, true);
+	board.board[2][4] = &pawn4;
+	set <Move> moves;
+
+	// Exercise
+	pawn3.getMoves(moves, board);
+
+	// debuging 
+	//std::cout << moves << std::endl;
+
+	// Verify
+	assertUnit(moves.size() == 1);  // many possible moves
+	assertUnit(moves.find(Move("b5b6p")) != moves.end());
+
+	// Teardown
+	board.board[1][5] = nullptr;
+	board.board[0][4] = nullptr;
+	board.board[1][4] = nullptr;
+	board.board[2][4] = nullptr;
 }
 
 /*************************************
@@ -248,6 +360,10 @@ void TestPawn::getMoves_promotionBlack()
  **************************************/
 void TestPawn::getType()
 {
-   assertUnit(NOT_YET_IMPLEMENTED);
+	// Setup
+	Pawn pawn(3, 0, true);
+
+	// Verify
+	assertUnit(pawn.getType() == PieceType::PAWN);
 }
 

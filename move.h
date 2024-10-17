@@ -24,7 +24,7 @@ class TestBoard;
 class Move
 {
 public:
-   enum MoveType { MOVE, ENPASSANT, CASTLE_KING, CASTLE_QUEEN, MOVE_ERROR };
+   enum MoveType { MOVE, ENPASSANT, CASTLE_KING, CASTLE_QUEEN, CASTLE_PAWN, MOVE_ERROR };
 
    friend TestMove;
    friend TestBoard;
