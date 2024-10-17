@@ -59,7 +59,6 @@ void Pawn::getMoves(set<Move>& moves, const Board& board) const
 				{
 					smith = newMove.getText(currentPos, destPos, Move::MOVE, pTarget->getType());
 					moves.insert(Move(smith)); // Mark as capture
-					break;
 				}
 			}
 		}

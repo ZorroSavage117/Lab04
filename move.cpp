@@ -228,7 +228,7 @@ void Move::setIsWhite(bool w)
 	isWhite = w;
 }
 
-string Move::getText()
+string Move::getSmith() const
 {
 	return text;
 }

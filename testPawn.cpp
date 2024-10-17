@@ -148,7 +148,7 @@ void TestPawn::getMoves_initialAdvanceBlack()
 {
 	// Setup
 	BoardEmpty board;
-	Pawn pawn(2, 6, true);
+	Pawn pawn(2, 6, false);
 	board.board[2][6] = &pawn;
 	set <Move> moves;
 
@@ -235,11 +235,11 @@ void TestPawn::getMoves_captureBlack()
 	// Setup
 	BoardEmpty board;
 	Pawn pawn1(1, 5, false);
-	pawn1.setNMoves(1);
 	board.board[1][5] = &pawn1;
 	Pawn pawn2(0, 4, true);
 	board.board[0][4] = &pawn2;
 	Pawn pawn3(1, 4, true);
+	pawn3.setNMoves(1);
 	board.board[1][4] = &pawn3;
 	Pawn pawn4(2, 4, true);
 	board.board[2][4] = &pawn4;
@@ -247,9 +247,6 @@ void TestPawn::getMoves_captureBlack()
 
 	// Exercise
 	pawn3.getMoves(moves, board);
-
-	// debuging 
-	//std::cout << moves << std::endl;
 
 	// Verify
 	assertUnit(moves.size() == 1);  // many possible moves
