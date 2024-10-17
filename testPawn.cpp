@@ -148,7 +148,7 @@ void TestPawn::getMoves_initialAdvanceBlack()
 {
 	// Setup
 	BoardEmpty board;
-	Pawn pawn(2, 6, true);
+	Pawn pawn(2, 6, false);
 	board.board[2][6] = &pawn;
 	set <Move> moves;
 
@@ -235,11 +235,11 @@ void TestPawn::getMoves_captureBlack()
 	// Setup
 	BoardEmpty board;
 	Pawn pawn1(1, 5, false);
-	pawn1.setNMoves(1);
 	board.board[1][5] = &pawn1;
 	Pawn pawn2(0, 4, true);
 	board.board[0][4] = &pawn2;
 	Pawn pawn3(1, 4, true);
+	pawn3.setNMoves(1);
 	board.board[1][4] = &pawn3;
 	Pawn pawn4(2, 4, true);
 	board.board[2][4] = &pawn4;
@@ -247,9 +247,6 @@ void TestPawn::getMoves_captureBlack()
 
 	// Exercise
 	pawn3.getMoves(moves, board);
-
-	// debuging 
-	//std::cout << moves << std::endl;
 
 	// Verify
 	assertUnit(moves.size() == 1);  // many possible moves
@@ -281,7 +278,33 @@ void TestPawn::getMoves_captureBlack()
  **************************************/
 void TestPawn::getMoves_enpassantWhite()
 {
-   assertUnit(NOT_YET_IMPLEMENTED);
+	// Setup
+	BoardEmpty board;
+	Pawn pawn1(1, 4, true);
+	pawn1.setNMoves(1);
+	board.board[1][4] = &pawn1;
+	Pawn pawn2(0, 4, false);
+	board.board[0][4] = &pawn2;
+	Pawn pawn3(1, 5, false);
+	board.board[1][5] = &pawn3;
+	Pawn pawn4(2, 4, false);
+	board.board[2][4] = &pawn4;
+	set <Move> moves;
+
+	// Exercise
+	pawn1.getMoves(moves, board);
+
+	// Verify
+	assertUnit(moves.size() == 3);  // many possible moves
+	assertUnit(moves.find(Move("b5a6E")) != moves.end());
+	assertUnit(moves.find(Move("b5b6p")) != moves.end());
+	assertUnit(moves.find(Move("b5c6E")) != moves.end());
+
+	// Teardown
+	board.board[1][5] = nullptr;
+	board.board[0][4] = nullptr;
+	board.board[1][4] = nullptr;
+	board.board[2][4] = nullptr;
 }
 
 
@@ -304,7 +327,33 @@ void TestPawn::getMoves_enpassantWhite()
  **************************************/
 void TestPawn::getMoves_enpassantBlack()
 {
-   assertUnit(NOT_YET_IMPLEMENTED);
+	// Setup
+	BoardEmpty board;
+	Pawn pawn1(5, 3, false);
+	pawn1.setNMoves(1);
+	board.board[5][3] = &pawn1;
+	Pawn pawn2(4, 3, true);
+	board.board[4][3] = &pawn2;
+	Pawn pawn3(5, 2, true);
+	board.board[5][2] = &pawn3;
+	Pawn pawn4(6, 3, true);
+	board.board[6][3] = &pawn4;
+	set <Move> moves;
+
+	// Exercise
+	pawn1.getMoves(moves, board);
+
+	// Verify
+	assertUnit(moves.size() == 3);  // many possible moves
+	assertUnit(moves.find(Move("f4e3E")) != moves.end());
+	assertUnit(moves.find(Move("f4f3p")) != moves.end());
+	assertUnit(moves.find(Move("f4g3E")) != moves.end());
+
+	// Teardown
+	board.board[5][3] = nullptr;
+	board.board[4][3] = nullptr;
+	board.board[5][2] = nullptr;
+	board.board[6][3] = nullptr;
 }
 
 /*************************************
@@ -326,7 +375,35 @@ void TestPawn::getMoves_enpassantBlack()
  **************************************/
 void TestPawn::getMoves_promotionWhite()
 {
-   assertUnit(NOT_YET_IMPLEMENTED);
+	// Setup
+	BoardEmpty board;
+	Pawn pawn1(1, 6, true);
+	pawn1.setNMoves(1);
+	board.board[1][6] = &pawn1;
+	Pawn pawn2(0, 7, false);
+	board.board[0][7] = &pawn2;
+	Pawn pawn3(2, 7, false);
+	board.board[2][7] = &pawn3;
+	set <Move> moves;
+
+	// Exercise
+	pawn1.getMoves(moves, board);
+
+	//debug
+	std::cout << "promotion white:  " << moves.size() << std::endl;
+	for (const auto& move : moves) {
+		std::cout << move.getSmith() << std::endl;
+	}
+
+	// Verify
+	assertUnit(moves.size() == 1);  // many possible moves
+	assertUnit(moves.find(Move("b7b8Q")) != moves.end());
+
+	// Teardown
+	board.board[1][5] = nullptr;
+	board.board[0][4] = nullptr;
+	board.board[1][4] = nullptr;
+	board.board[2][4] = nullptr;
 }
 
 

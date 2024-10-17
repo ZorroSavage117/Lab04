@@ -25,8 +25,9 @@ void Pawn::getMoves(set<Move>& moves, const Board& board) const
     const Position currentPos = this->getPosition();
     Move newMove;
     string smith;
-
-    if (nMoves == 0)
+	
+	// 2 space advansment
+	if (nMoves == 0)
 	{
 		int offsets[2] = { 1, 2 };
 		// Check if the new position is within board boundaries
@@ -59,7 +60,6 @@ void Pawn::getMoves(set<Move>& moves, const Board& board) const
 				{
 					smith = newMove.getText(currentPos, destPos, Move::MOVE, pTarget->getType());
 					moves.insert(Move(smith)); // Mark as capture
-					break;
 				}
 			}
 		}
@@ -96,5 +96,56 @@ void Pawn::getMoves(set<Move>& moves, const Board& board) const
                 moves.insert(Move(smith)); // Mark as capture
             }
         }
+		
+		// en passont white
+		if (fWhite && currentPos.getRow() == 4)
+		{
+			int offsets[2] = { 1, -1 };
+			// Check if the new position is within board boundaries
+			for (int i = 0; i < 2; i++)
+			{
+				int newCol = currentPos.getCol() + offsets[i];
+				int newRow = currentPos.getRow() + 1;
+				Position destPos(newCol, newRow);
+				newRow -= 1;
+				Position capPos(newCol, newRow);
+
+				if (destPos.isValid() && capPos.isValid())
+				{
+					const Piece* pTarget = &(board[capPos]); // Get piece at new position
+					if (pTarget->isWhite() != this->fWhite)
+					{
+						smith = newMove.getText(currentPos, destPos, Move::ENPASSANT);
+						moves.insert(Move(smith)); // Mark as capture
+					}
+				}
+			}
+		}
+		if (!fWhite && currentPos.getRow() == 3)
+		{
+			int offsets[2] = { 1, -1 };
+			// Check if the new position is within board boundaries
+			for (int i = 0; i < 2; i++)
+			{
+				int newCol = currentPos.getCol() + offsets[i];
+				int newRow = currentPos.getRow() - 1;
+				Position destPos(newCol, newRow);
+				newRow += 1;
+				Position capPos(newCol, newRow);
+
+				if (destPos.isValid() && capPos.isValid())
+				{
+					const Piece* pTarget = &(board[capPos]); // Get piece at new position
+					if (pTarget->isWhite() != this->fWhite)
+					{
+						smith = newMove.getText(currentPos, destPos, Move::ENPASSANT);
+						moves.insert(Move(smith)); // Mark as capture
+					}
+				}
+			}
+		}
     }
 }
+
+
+
