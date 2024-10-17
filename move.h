@@ -24,7 +24,7 @@ class TestBoard;
 class Move
 {
 public:
-   enum MoveType { MOVE, ENPASSANT, CASTLE_KING, CASTLE_QUEEN, MOVE_ERROR };
+   enum MoveType { MOVE, ENPASSANT, CASTLE_KING, CASTLE_QUEEN, CASTLE_PAWN, MOVE_ERROR };
 
    friend TestMove;
    friend TestBoard;
@@ -52,7 +52,7 @@ public:
    void setMoveType(MoveType m);
    bool getIsWhite();
    void setIsWhite(bool w);
-   string getText();
+   string getSmith() const;
    string getText(Position sour, Position des, MoveType type, PieceType cap = SPACE, PieceType pro = SPACE);
    void setText(string smith);
    bool equal(string smith1, string smith2);
