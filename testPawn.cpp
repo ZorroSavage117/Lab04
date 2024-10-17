@@ -394,6 +394,7 @@ void TestPawn::getMoves_promotionWhite()
 	for (const auto& move : moves) {
 		std::cout << move.getSmith() << std::endl;
 	}
+	// hello
 
 	// Verify
 	assertUnit(moves.size() == 1);  // many possible moves
