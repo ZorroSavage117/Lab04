@@ -18,6 +18,7 @@
 #include "pieceQueen.h"
 #include "pieceKing.h"
 #include "piecePawn.h"
+#include "iostream"
 #include <cassert>
 using namespace std;
 
@@ -206,12 +207,12 @@ void Board::move(Move& move)
 			board[4][7] = nullptr;
 		}
 	}
-	if ((move.getMoveType() == Move::CASTLE_KING))
+	else if ((move.getMoveType() == Move::CASTLE_KING))
 	{
 
 		const Position posSource = move.getSource();
 		const Position posDest = move.getDest();
-		const Position whiteKing(0,4);
+		const Position whiteKing(4,0);
 		if (posSource == whiteKing)
 		{
 			const Position posRook(5, 0);
@@ -237,9 +238,19 @@ void Board::move(Move& move)
 			board[4][7] = nullptr;
 		}
 	}
-	else
+	else if (move.getMoveType() == Move::MOVE)
 	{
-		// move the piece
+		if (move.getPromote() != SPACE)
+		{
+			const Position posSource = move.getSource();
+			const Position posDest = move.getDest();
+			delete board[posSource.getCol()][posSource.getRow()];
+			Queen* queen = new Queen(posDest, move.getIsWhite());
+			Space* space = new Space(posSource);
+			board[posSource.getCol()][posSource.getRow()] = queen;
+			board[posDest.getCol()][posDest.getRow()] = space ;
+		}
+
 		if (move.getCapture() == SPACE)
 		{
 			const Position posSource = move.getSource();
@@ -263,6 +274,22 @@ void Board::move(Move& move)
 			board[posSource.getCol()][posSource.getRow()] = space;
 		}
 	}
+	else if (move.getMoveType() == Move::ENPASSANT)
+	{
+		if (move.getIsWhite() == true)
+		{
+			const Position posSource = move.getSource();
+			const Position posDest = move.getDest();
+			Piece* curMovePiece = board[posSource.getCol()][posSource.getRow()];
+			Piece* destPiece = board[posDest.getCol()][posDest.getRow()];
+			Space* space = new Space(posSource);
+			Space* space2 = new Space(posSource);
+			curMovePiece->setPosition(posDest);
+			board[posDest.getCol()][posDest.getRow() - 1] = space2;
+			board[posDest.getCol()][posDest.getRow()] = curMovePiece;
+			board[posSource.getCol()][posSource.getRow()] = space;
+		}
+	}
 	// update number of moves
 	numMoves++;
 }
@@ -280,4 +307,15 @@ BoardEmpty::BoardEmpty() : BoardDummy(), pSpace(nullptr)
 BoardEmpty::~BoardEmpty()
 {
 	delete pSpace;
+}
+bool Board::whiteTurn() const
+{
+	if (numMoves % 2 == 0)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
