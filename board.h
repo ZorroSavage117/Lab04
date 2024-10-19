@@ -46,7 +46,7 @@ public:
    virtual ~Board()   {  }
 
    // getters
-   virtual int  getCurrentMove() const { return -99;      }
+   virtual int  getCurrentMove() const { return numMoves;      }
    virtual bool whiteTurn()      const { return false;  }
    virtual void display(const Position& posHover, const Position& posSelect) const;
    virtual const Piece& operator [] (const Position& pos) const;
