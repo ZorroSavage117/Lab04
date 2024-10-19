@@ -188,21 +188,22 @@ void TestPawn::getMoves_captureWhite()
 	BoardEmpty board;
 	Pawn pawn1(1, 5, true);
 	board.board[1][5] = &pawn1;
+	pawn1.setNMoves(1);
 	Pawn pawn2(0, 6, false);
 	board.board[0][6] = &pawn2;
 	Pawn pawn3(1, 6, false);
-	pawn3.setNMoves(1);
 	board.board[1][6] = &pawn3;
 	Pawn pawn4(2, 6, false);
 	board.board[2][6] = &pawn4;
 	set <Move> moves;
 
 	// Exercise
-	pawn3.getMoves(moves, board);
+	pawn1.getMoves(moves, board);
 
 	// Verify
-	assertUnit(moves.size() == 1);  // many possible moves
-	assertUnit(moves.find(Move("b7b6p")) != moves.end());
+	assertUnit(moves.size() == 2);  // many possible moves
+	assertUnit(moves.find(Move("b6a7p")) != moves.end());
+	assertUnit(moves.find(Move("b6c7p")) != moves.end());
 
 	// Teardown
 	board.board[1][5] = nullptr;
@@ -235,22 +236,23 @@ void TestPawn::getMoves_captureBlack()
 	// Setup
 	BoardEmpty board;
 	Pawn pawn1(1, 5, false);
+	pawn1.setNMoves(1);
 	board.board[1][5] = &pawn1;
 	Pawn pawn2(0, 4, true);
 	board.board[0][4] = &pawn2;
 	Pawn pawn3(1, 4, true);
-	pawn3.setNMoves(1);
 	board.board[1][4] = &pawn3;
 	Pawn pawn4(2, 4, true);
 	board.board[2][4] = &pawn4;
 	set <Move> moves;
 
 	// Exercise
-	pawn3.getMoves(moves, board);
+	pawn1.getMoves(moves, board);
 
 	// Verify
-	assertUnit(moves.size() == 1);  // many possible moves
-	assertUnit(moves.find(Move("b5b6p")) != moves.end());
+	assertUnit(moves.size() == 2);  // many possible moves
+	assertUnit(moves.find(Move("b6a5p")) != moves.end());
+	assertUnit(moves.find(Move("b6c5p")) != moves.end());
 
 	// Teardown
 	board.board[1][5] = nullptr;
@@ -295,7 +297,7 @@ void TestPawn::getMoves_enpassantWhite()
 	pawn1.getMoves(moves, board);
 
 	// Verify
-	assertUnit(moves.size() == 3);  // many possible moves
+	assertUnit(moves.size() == 2);  // many possible moves
 	assertUnit(moves.find(Move("b5a6E")) != moves.end());
 	assertUnit(moves.find(Move("b5b6p")) != moves.end());
 	assertUnit(moves.find(Move("b5c6E")) != moves.end());
@@ -344,7 +346,7 @@ void TestPawn::getMoves_enpassantBlack()
 	pawn1.getMoves(moves, board);
 
 	// Verify
-	assertUnit(moves.size() == 3);  // many possible moves
+	assertUnit(moves.size() == 2);  // many possible moves
 	assertUnit(moves.find(Move("f4e3E")) != moves.end());
 	assertUnit(moves.find(Move("f4f3p")) != moves.end());
 	assertUnit(moves.find(Move("f4g3E")) != moves.end());
@@ -389,22 +391,16 @@ void TestPawn::getMoves_promotionWhite()
 	// Exercise
 	pawn1.getMoves(moves, board);
 
-	//debug
-	std::cout << "promotion white:  " << moves.size() << std::endl;
-	for (const auto& move : moves) {
-		std::cout << move.getSmith() << std::endl;
-	}
-	// hello
-
 	// Verify
-	assertUnit(moves.size() == 1);  // many possible moves
+	assertUnit(moves.size() == 3);  // many possible moves
 	assertUnit(moves.find(Move("b7b8Q")) != moves.end());
+	assertUnit(moves.find(Move("b7a8pQ")) != moves.end());
+	assertUnit(moves.find(Move("b7c8pQ")) != moves.end());
 
 	// Teardown
-	board.board[1][5] = nullptr;
-	board.board[0][4] = nullptr;
-	board.board[1][4] = nullptr;
-	board.board[2][4] = nullptr;
+	board.board[1][6] = nullptr;
+	board.board[0][7] = nullptr;
+	board.board[2][7] = nullptr;
 }
 
 
@@ -427,7 +423,30 @@ void TestPawn::getMoves_promotionWhite()
  **************************************/
 void TestPawn::getMoves_promotionBlack()
 {
-   assertUnit(NOT_YET_IMPLEMENTED);
+	// Setup
+	BoardEmpty board;
+	Pawn pawn1(4, 1, false);
+	pawn1.setNMoves(1);
+	board.board[4][1] = &pawn1;
+	Pawn pawn2(3, 0, true);
+	board.board[3][0] = &pawn2;
+	Pawn pawn3(5, 0, true);
+	board.board[5][0] = &pawn3;
+	set <Move> moves;
+
+	// Exercise
+	pawn1.getMoves(moves, board);
+
+	// Verify
+	assertUnit(moves.size() == 3);  // many possible moves
+	assertUnit(moves.find(Move("e2e1Q")) != moves.end());
+	assertUnit(moves.find(Move("e2d1pQ")) != moves.end());
+	assertUnit(moves.find(Move("e2f1pQ")) != moves.end());
+
+	// Teardown
+	board.board[4][1] = nullptr;
+	board.board[5][0] = nullptr;
+	board.board[3][0] = nullptr;
 }
 
 

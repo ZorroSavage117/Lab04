@@ -22,129 +22,129 @@ void Pawn::getMoves(set<Move>& moves, const Board& board) const
 	// if nMoves > 0, it can only move 1 space forward   // done
 	// if there is an enemy piece diagonally in front of it and it just moved 2 spaces, it can capture it en passant
 
-    const Position currentPos = this->getPosition();
-    Move newMove;
-    string smith;
+	const Position currentPos = this->getPosition();
+	Move newMove;
+	string smith;
+	int newCol;
+	int newRow;
 	
-	// 2 space advansment
-	if (nMoves == 0)
+	// 1 space advansment
+	int offsets[2] = { 1, -1};
+	if (fWhite)
 	{
-		int offsets[2] = { 1, 2 };
-		// Check if the new position is within board boundaries
-		for (int i = 0; i < 2; i++)
+		newRow = currentPos.getRow() + 1;
+		Position destPosWA(currentPos.getCol(), newRow);
+		if (destPosWA.isValid())
 		{
-			int newCol = currentPos.getCol();
-			int newRow;
-			if (fWhite)
+			const Piece* pTarget = &(board[destPosWA]); // Get piece at new position
+			if (currentPos.getRow() == 6)
 			{
-				newRow = currentPos.getRow() + offsets[i];
-
-			}
-			else
-			{
-				newRow = currentPos.getRow() - offsets[i];
-			}
-			Position destPos(newCol, newRow);
-
-			if (destPos.isValid())
-			{
-				const Piece* pTarget = &(board[destPos]); // Get piece at new position
-				// If there's no piece, it's a valid move
 				if (pTarget->getType() == PieceType::SPACE)
 				{
-					smith = newMove.getText(currentPos, destPos, Move::MOVE);
+					smith = newMove.getText(currentPos, destPosWA, Move::MOVE, PieceType::SPACE, PieceType::QUEEN);
 					moves.insert(Move(smith));
 				}
-				// If there's a piece, check if it's an enemy piece for capturing
-				else if (pTarget->isWhite() != this->fWhite)
+			}
+			else if (pTarget->getType() == PieceType::SPACE)
+			{
+				smith = newMove.getText(currentPos, destPosWA, Move::MOVE);
+				moves.insert(Move(smith));
+			}
+		}
+		for (int i = 0; i < 2; i++)
+		{
+			newCol = currentPos.getCol() + offsets[i];
+			Position destPosWB(newCol, newRow);
+			if (destPosWB.isValid())
+			{
+				const Piece* pTarget = &(board[destPosWB]);
+				if (pTarget->isWhite() != fWhite && pTarget->getType() != PieceType::SPACE)
 				{
-					smith = newMove.getText(currentPos, destPos, Move::MOVE, pTarget->getType());
-					moves.insert(Move(smith)); // Mark as capture
+					if (currentPos.getRow() == 6)
+					{
+						smith = newMove.getText(currentPos, destPosWB, Move::MOVE, pTarget->getType(), PieceType::QUEEN);
+						moves.insert(Move(smith));
+					}
+					else
+					{
+						smith = newMove.getText(currentPos, destPosWB, Move::MOVE, pTarget->getType());
+						moves.insert(Move(smith));
+					}
 				}
 			}
 		}
+		if (nMoves == 0)
+		{
+			newRow += 1;
+			Position destPosWC(currentPos.getCol(), newRow);
+			const Piece* pTarget = &(board[destPosWC]); // Get piece at new position
+			// If there's no piece, it's a valid move
+			if (pTarget->getType() == PieceType::SPACE)
+			{
+				smith = newMove.getText(currentPos, destPosWC, Move::MOVE);
+				moves.insert(Move(smith));
+			}
+		}
+		
 	}
 	else
 	{
-        int newCol = currentPos.getCol();
-		int newRow;
-		if (fWhite)
+		newRow = currentPos.getRow() - 1;
+		Position destPosBA(currentPos.getCol(), newRow);
+		if (destPosBA.isValid())
 		{
-			newRow = currentPos.getRow() + 1;
-		}
-		else
-		{
-			newRow = currentPos.getRow() - 1;
-		}
-		Position destPos(newCol, newRow);
-
-
-        // Check if the new position is within board boundaries
-        if (destPos.isValid())
-        {
-            const Piece* pTarget = &(board[destPos]); // Get piece at new position
-            // If there's no piece, it's a valid move
-            if (pTarget->getType() == PieceType::SPACE)
-            {
-                smith = newMove.getText(currentPos, destPos, Move::MOVE);
-                moves.insert(Move(smith));
-            }
-            // If there's a piece, check if it's an enemy piece for capturing
-            else if (pTarget->isWhite() != this->fWhite)
-            {
-                smith = newMove.getText(currentPos, destPos, Move::MOVE, pTarget->getType());
-                moves.insert(Move(smith)); // Mark as capture
-            }
-        }
-		
-		// en passont white
-		if (fWhite && currentPos.getRow() == 4)
-		{
-			int offsets[2] = { 1, -1 };
-			// Check if the new position is within board boundaries
-			for (int i = 0; i < 2; i++)
+			const Piece* pTarget = &(board[destPosBA]); // Get piece at new position
+			if (currentPos.getRow() == 1)
 			{
-				int newCol = currentPos.getCol() + offsets[i];
-				int newRow = currentPos.getRow() + 1;
-				Position destPos(newCol, newRow);
-				newRow -= 1;
-				Position capPos(newCol, newRow);
-
-				if (destPos.isValid() && capPos.isValid())
+				if (pTarget->getType() == PieceType::SPACE)
 				{
-					const Piece* pTarget = &(board[capPos]); // Get piece at new position
-					if (pTarget->isWhite() != this->fWhite)
+					smith = newMove.getText(currentPos, destPosBA, Move::MOVE, PieceType::SPACE, PieceType::QUEEN);
+					moves.insert(Move(smith));
+				}
+			}
+			else if (pTarget->getType() == PieceType::SPACE)
+			{
+				smith = newMove.getText(currentPos, destPosBA, Move::MOVE);
+				moves.insert(Move(smith));
+			}
+		}
+		for (int i = 0; i < 2; i++)
+		{
+			newCol = currentPos.getCol() + offsets[i];
+			Position destPosBB(newCol, newRow);
+			if (destPosBB.isValid())
+			{
+				const Piece* pTarget = &(board[destPosBB]);
+				if (pTarget->isWhite() != fWhite && pTarget->getType() != PieceType::SPACE)
+				{
+					if (currentPos.getRow() == 1)
 					{
-						smith = newMove.getText(currentPos, destPos, Move::ENPASSANT);
-						moves.insert(Move(smith)); // Mark as capture
+						smith = newMove.getText(currentPos, destPosBB, Move::MOVE, pTarget->getType(), PieceType::QUEEN);
+						moves.insert(Move(smith));
+					}
+					else
+					{
+						smith = newMove.getText(currentPos, destPosBB, Move::MOVE, pTarget->getType());
+						moves.insert(Move(smith));
 					}
 				}
 			}
 		}
-		if (!fWhite && currentPos.getRow() == 3)
+		if (nMoves == 0)
 		{
-			int offsets[2] = { 1, -1 };
-			// Check if the new position is within board boundaries
-			for (int i = 0; i < 2; i++)
+			newRow -= 1;
+			Position destPosBC(currentPos.getCol(), newRow);
+			const Piece* pTarget = &(board[destPosBC]); // Get piece at new position
+			// If there's no piece, it's a valid move
+			if (pTarget->getType() == PieceType::SPACE)
 			{
-				int newCol = currentPos.getCol() + offsets[i];
-				int newRow = currentPos.getRow() - 1;
-				Position destPos(newCol, newRow);
-				newRow += 1;
-				Position capPos(newCol, newRow);
-
-				if (destPos.isValid() && capPos.isValid())
-				{
-					const Piece* pTarget = &(board[capPos]); // Get piece at new position
-					if (pTarget->isWhite() != this->fWhite)
-					{
-						smith = newMove.getText(currentPos, destPos, Move::ENPASSANT);
-						moves.insert(Move(smith)); // Mark as capture
-					}
-				}
+				smith = newMove.getText(currentPos, destPosBC, Move::MOVE);
+				moves.insert(Move(smith));
 			}
 		}
-    }
+	}
+
+ 
 }
 
 

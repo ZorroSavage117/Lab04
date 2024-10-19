@@ -27,7 +27,7 @@ public:
 	   construct_emptyBoard();
 
        // move
-       /*move_pawnSimple();
+       move_pawnSimple();
        move_pawnCapture();
        move_pawnDouble();
        move_pawnEnpassant();
@@ -43,19 +43,19 @@ public:
        move_kingMove();
        move_kingAttack();
        move_kingShortCastle();
-       move_kingLongCastle();*/
+       move_kingLongCastle();
 
        // Get Current Move
-       /*getCurrentMove_initial();
+       getCurrentMove_initial();
        getCurrentMove_second();
        getCurrentMove_middleWhite();
-       getCurrentMove_middleBlack();*/
+       getCurrentMove_middleBlack();
 
        // Whites Turn?
-       /*whiteTurn_initial();
+       whiteTurn_initial();
        whiteTurn_second();
        whiteTurn_middleWhite();
-       whiteTurn_middleBlack();*/
+       whiteTurn_middleBlack();
 
        // fetch and get
        fetch_a1();
