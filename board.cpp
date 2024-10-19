@@ -13,6 +13,11 @@
 #include "piece.h"
 #include "pieceSpace.h"
 #include "pieceKnight.h"
+#include "pieceRook.h"
+#include "pieceBishop.h"
+#include "pieceQueen.h"
+#include "pieceKing.h"
+#include "piecePawn.h"
 #include <cassert>
 using namespace std;
 
@@ -21,14 +26,14 @@ using namespace std;
  *         Just fill the board with the known pieces
  *   +---a-b-c-d-e-f-g-h---+
  *   |                     |
- *   8     N         N     8
+ *   8   R N B Q K B N R   8
  *   7                     7
  *   6                     6
  *   5                     5
  *   4                     4
  *   3                     3
  *   2                     2
- *   1     n         n     1
+ *   1   r n b q k b n r   1
  *   |                     |
  *   +---a-b-c-d-e-f-g-h---+
  ***********************************************/
@@ -40,9 +45,40 @@ void Board::reset(bool fFree)
 			board[c][r] = nullptr;
 	board[1][7] = new Knight(Position(1, 7), true);
 	board[6][7] = new Knight(Position(6, 7), true);
+	board[0][7] = new Rook(Position(0, 7), true);
+	board[7][7] = new Rook(Position(7, 7), true);
+	board[2][7] = new Bishop(Position(2, 7), true);
+	board[5][7] = new Bishop(Position(5, 7), true);
+	board[3][7] = new Queen(Position(3, 7), true);
+	board[4][7] = new King(Position(4, 7), true);
+	board[0][6] = new Pawn(Position(0, 6), true);
+	board[1][6] = new Pawn(Position(1, 6), true);
+	board[2][6] = new Pawn(Position(2, 6), true);
+	board[3][6] = new Pawn(Position(3, 6), true);
+	board[4][6] = new Pawn(Position(4, 6), true);
+	board[5][6] = new Pawn(Position(5, 6), true);
+	board[6][6] = new Pawn(Position(6, 6), true);
+	board[7][6] = new Pawn(Position(7, 6), true);
+
 
 	board[1][0] = new Knight(Position(1, 0), false);
 	board[6][0] = new Knight(Position(6, 0), false);
+	board[0][0] = new Rook(Position(0, 0), false);
+	board[7][0] = new Rook(Position(7, 0), false);
+	board[2][0] = new Bishop(Position(2, 0), false);
+	board[5][0] = new Bishop(Position(5, 0), false);
+	board[3][0] = new Queen(Position(3, 0), false);
+	board[4][0] = new King(Position(4, 0), false);
+	board[0][1] = new Pawn(Position(0, 1), false);
+	board[1][1] = new Pawn(Position(1, 1), false);
+	board[2][1] = new Pawn(Position(2, 1), false);
+	board[3][1] = new Pawn(Position(3, 1), false);
+	board[4][1] = new Pawn(Position(4, 1), false);
+	board[5][1] = new Pawn(Position(5, 1), false);
+	board[6][1] = new Pawn(Position(6, 1), false);
+	board[7][1] = new Pawn(Position(7, 1), false);
+
+
 }
 
 // we really REALLY need to delete this. 

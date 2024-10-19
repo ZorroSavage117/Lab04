@@ -51,8 +51,8 @@ const int RGB_WHITE[] = { 255, 255, 255 };
 const int RGB_BLACK[] = { 0, 0, 0 };
 
 // normal squares: tan and brown
-const int RGB_WHITE_SQUARE[] = { 210, 180, 140 };
-const int RGB_BLACK_SQUARE[] = { 165, 42, 42 };
+const int RGB_WHITE_SQUARE[] = { 169, 169, 169 };
+const int RGB_BLACK_SQUARE[] = { 102, 51, 153 };
 
 // the color of a selected square
 const int RGB_SELECTED[] = { 255, 0, 0 };

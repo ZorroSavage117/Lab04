@@ -228,7 +228,7 @@ void Move::setIsWhite(bool w)
 	isWhite = w;
 }
 
-string Move::getText()
+string Move::getSmith() const
 {
 	return text;
 }
@@ -279,7 +279,7 @@ string Move::getText(Position sour, Position des, MoveType type, PieceType cap, 
 	d = conv(dc) + to_string(dr + 1);
 	if (type == MOVE)
 	{
-		if (cap != SPACE)
+		if (cap != SPACE && pro == SPACE)
 		{
 			switch (cap)
 			{
@@ -303,9 +303,32 @@ string Move::getText(Position sour, Position des, MoveType type, PieceType cap, 
 				break;
 			}
 		}
-		else
+		else if (pro != SPACE)
 		{
-			t = "";
+			switch (cap)
+			{
+			case PAWN:
+				t = "pQ";
+				break;
+			case KNIGHT:
+				t = "nQ";
+				break;
+			case BISHOP:
+				t = "bQ";
+				break;
+			case ROOK:
+				t = "rQ";
+				break;
+			case QUEEN:
+				t = "qQ";
+				break;
+			case KING:    //not posible
+				t = "kQ";
+				break;
+			case SPACE:
+				t = 'Q';
+				break;
+			}
 		}
 	}
 	else if (type == ENPASSANT)
