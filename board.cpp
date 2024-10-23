@@ -108,6 +108,39 @@ const Piece& Board::operator[](const Position& pos) const
 	}
 }
 
+//void Board::getMoves(set<Move>& moves, PieceType type) const
+//{
+//	switch (type)
+//	{
+//	case PAWN:
+//		Pawn pawn;
+//		pawn.getMoves(moves, *this);
+//		break;
+//	case KNIGHT:
+//		Knight knight;
+//		knight.getMoves(moves, *this);
+//		break;
+//	case BISHOP:
+//		Bishop bishop;
+//		bishop.getMoves(moves, *this);
+//		break;
+//	case ROOK:
+//		Rook rook;
+//		rook.getMoves(moves, *this);
+//		break;
+//	case QUEEN:
+//		Queen queen;
+//		queen.getMoves(moves, *this);
+//		break;
+//	case KING:
+//		King king;
+//		king.getMoves(moves, *this);
+//		break;
+//	default:
+//		break;
+//	}
+//}
+
 /***********************************************
  * BOARD : DISPLAY
  *         Display the board
@@ -115,13 +148,37 @@ const Piece& Board::operator[](const Position& pos) const
 void Board::display(const Position& posHover, const Position& posSelect) const
 {
 	pgout->drawBoard();
+	pgout->drawHover(posHover);
+	pgout->drawSelected(posSelect);
+	/*set<Move> moves;
+	Piece & = Piece;
+		.getMoves(moves
+	pgout->drawPossible(posSelect);*/
 	for each (Piece* piece in board)
 	{
 		if ((piece != nullptr) && (piece->getType() != SPACE))
 		{
+			
+			//if (piece->getPosition() == posSelect)
+			//{
+			//	set<Move> moves;
+			//	getMoves(moves, piece->getType());
+			//	set <Move> ::iterator it;
+			//	for (it = moves.begin(); it != moves.end(); ++it)
+			//	{
+			//		pgout->drawPossible(it->getDest());
+			//	}
+			//	//pgout->drawPossible(posSelect);
+			//}
 			piece->display(pgout);
 		}
+
 	}
+	// draw the hover piece
+	/*if (posHover.isValid())
+	{
+		pgout->drawHover(posHover);
+	}*/
 }
 
 /************************************************

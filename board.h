@@ -59,6 +59,7 @@ public:
 
 protected:
    void  assertBoard();
+   //void  getMoves(set <Move>& moves, const PieceType) const;
 
    Piece * board[8][8];    // the board of chess pieces
    int numMoves;

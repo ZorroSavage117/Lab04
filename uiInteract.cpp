@@ -147,7 +147,7 @@ void moveCallback(int x, int y)
    Position pos;
 
    // get coordinates from screen dimensions
-   pos.setXY((double)x, (double)y);
+   pos.setXY((double)x,  (double)y );
 
    ui.setHoverPosition(pos);
 }
@@ -215,9 +215,9 @@ void Interface::setFramesPerSecond(double value)
  * All the static member variables need to be initialized
  * Somewhere globally.  This is a good spot
  **************************************************/
-Position      Interface::posHover = -1;
-Position      Interface::posSelect = -1;
-Position      Interface::posSelectPrevious = -1;
+Position      Interface::posHover = 0;
+Position      Interface::posSelect = 1;
+Position      Interface::posSelectPrevious = 1;
 bool          Interface::initialized   = false;
 double        Interface::timePeriod    = 0.2; // default to 5 frames/second
 unsigned long Interface::nextTick      = 0;        // redraw now please
