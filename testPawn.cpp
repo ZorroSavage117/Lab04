@@ -283,13 +283,17 @@ void TestPawn::getMoves_enpassantWhite()
 	// Setup
 	BoardEmpty board;
 	Pawn pawn1(1, 4, true);
-	pawn1.setNMoves(1);
+	pawn1.setNMoves(3);
 	board.board[1][4] = &pawn1;
 	Pawn pawn2(0, 4, false);
+	pawn2.setNMoves(1);
+	pawn2.justMoved(true);
 	board.board[0][4] = &pawn2;
 	Pawn pawn3(1, 5, false);
 	board.board[1][5] = &pawn3;
 	Pawn pawn4(2, 4, false);
+	pawn4.setNMoves(1);
+	pawn4.justMoved(true);
 	board.board[2][4] = &pawn4;
 	set <Move> moves;
 
@@ -299,7 +303,6 @@ void TestPawn::getMoves_enpassantWhite()
 	// Verify
 	assertUnit(moves.size() == 2);  // many possible moves
 	assertUnit(moves.find(Move("b5a6E")) != moves.end());
-	assertUnit(moves.find(Move("b5b6p")) != moves.end());
 	assertUnit(moves.find(Move("b5c6E")) != moves.end());
 
 	// Teardown
@@ -348,7 +351,6 @@ void TestPawn::getMoves_enpassantBlack()
 	// Verify
 	assertUnit(moves.size() == 2);  // many possible moves
 	assertUnit(moves.find(Move("f4e3E")) != moves.end());
-	assertUnit(moves.find(Move("f4f3p")) != moves.end());
 	assertUnit(moves.find(Move("f4g3E")) != moves.end());
 
 	// Teardown

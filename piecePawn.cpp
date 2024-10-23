@@ -31,6 +31,7 @@ void Pawn::getMoves(set<Move>& moves, const Board& board) const
 		Position destPosWA(currentPos.getCol(), newRow);
 		if (destPosWA.isValid())
 		{
+			// white move 1 space forward and premote to queen if it reaches the end of the board
 			const Piece* pTarget = &(board[destPosWA]); // Get piece at new position
 			if (currentPos.getRow() == 6)
 			{
@@ -40,12 +41,14 @@ void Pawn::getMoves(set<Move>& moves, const Board& board) const
 					moves.insert(Move(smith));
 				}
 			}
+			// white move 1 space forward
 			else if (pTarget->getType() == PieceType::SPACE)
 			{
 				smith = newMove.getText(currentPos, destPosWA, Move::MOVE);
 				moves.insert(Move(smith));
 			}
 		}
+		// white capture
 		for (int i = 0; i < 2; i++)
 		{
 			newCol = currentPos.getCol() + offsets[i];
@@ -55,19 +58,30 @@ void Pawn::getMoves(set<Move>& moves, const Board& board) const
 				const Piece* pTarget = &(board[destPosWB]);
 				if (pTarget->isWhite() != fWhite && pTarget->getType() != PieceType::SPACE)
 				{
+					// white capture and premote to queen if it reaches the end of the board
 					if (currentPos.getRow() == 6)
 					{
 						smith = newMove.getText(currentPos, destPosWB, Move::MOVE, pTarget->getType(), PieceType::QUEEN);
 						moves.insert(Move(smith));
 					}
+					// white capture
 					else
 					{
 						smith = newMove.getText(currentPos, destPosWB, Move::MOVE, pTarget->getType());
 						moves.insert(Move(smith));
 					}
 				}
+				// white en passant
+				Position enpassantPos(newCol, currentPos.getRow());
+				const Piece* pEnpassant = &(board[enpassantPos]);
+				if (pTarget->getType() == PieceType::SPACE && pEnpassant->isWhite() != fWhite && pEnpassant->getType() == PieceType::PAWN && pEnpassant->justMoved(true) && currentPos.getRow() == 4)
+				{
+					smith = newMove.getText(currentPos, destPosWB, Move::ENPASSANT, PieceType::PAWN);
+					moves.insert(Move(smith));
+				}
 			}
 		}
+		// white move 2 spaces forward
 		if (nMoves == 0)
 		{
 			newRow += 1;
@@ -81,6 +95,7 @@ void Pawn::getMoves(set<Move>& moves, const Board& board) const
 			}
 		}
 		
+		
 	}
 	else
 	{
@@ -88,6 +103,7 @@ void Pawn::getMoves(set<Move>& moves, const Board& board) const
 		Position destPosBA(currentPos.getCol(), newRow);
 		if (destPosBA.isValid())
 		{
+			// black move 1 space forward and premote to queen if it reaches the end of the board
 			const Piece* pTarget = &(board[destPosBA]); // Get piece at new position
 			if (currentPos.getRow() == 1)
 			{
@@ -97,12 +113,14 @@ void Pawn::getMoves(set<Move>& moves, const Board& board) const
 					moves.insert(Move(smith));
 				}
 			}
+			// black move 1 space forward
 			else if (pTarget->getType() == PieceType::SPACE)
 			{
 				smith = newMove.getText(currentPos, destPosBA, Move::MOVE);
 				moves.insert(Move(smith));
 			}
 		}
+		// black capture
 		for (int i = 0; i < 2; i++)
 		{
 			newCol = currentPos.getCol() + offsets[i];
@@ -112,19 +130,30 @@ void Pawn::getMoves(set<Move>& moves, const Board& board) const
 				const Piece* pTarget = &(board[destPosBB]);
 				if (pTarget->isWhite() != fWhite && pTarget->getType() != PieceType::SPACE)
 				{
+					// black capture and premote to queen if it reaches the end of the board
 					if (currentPos.getRow() == 1)
 					{
 						smith = newMove.getText(currentPos, destPosBB, Move::MOVE, pTarget->getType(), PieceType::QUEEN);
 						moves.insert(Move(smith));
 					}
+					// black capture
 					else
 					{
 						smith = newMove.getText(currentPos, destPosBB, Move::MOVE, pTarget->getType());
 						moves.insert(Move(smith));
 					}
 				}
+				// black en passant
+				Position enpassantPos(newCol, currentPos.getRow());
+				const Piece* pEnpassant = &(board[enpassantPos]);
+				if (pTarget->getType() == PieceType::SPACE && pEnpassant->isWhite() != fWhite && pEnpassant->getType() == PieceType::PAWN && pEnpassant->justMoved(true) && currentPos.getRow() == 3)
+				{
+					smith = newMove.getText(currentPos, destPosBB, Move::ENPASSANT, PieceType::PAWN);
+					moves.insert(Move(smith));
+				}
 			}
 		}
+		// black double move
 		if (nMoves == 0)
 		{
 			newRow -= 1;

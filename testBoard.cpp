@@ -135,7 +135,38 @@ void TestBoard::move_knightAttack()
   ********************************************************/
 void TestBoard::move_pawnSimple()
 {
-	assertUnit(NOT_YET_IMPLEMENTED);
+   // SETUP
+   Move move;
+   move.source.set(0, 1);
+   move.dest.set(0, 2);
+   move.capture = SPACE;
+   move.promote = SPACE;
+   move.isWhite = true;
+   move.moveType = Move::MOVE;
+   Board board(nullptr, true /*noreset*/);
+   board.numMoves = 17;
+   board.board[0][1] = new PieceSpy(0, 1, true  /*isWhite*/, PAWN);
+   board.board[0][2] = new PieceSpy(0, 2, true, SPACE);
+   board.board[0][1]->nMoves = 17;
+   PieceSpy::reset();
+
+   // EXERCISE
+   board.move(move);
+
+   // VERIFY
+   assertUnit(18 == board.numMoves);
+   assertUnit(SPACE == (board.board[0][1])->getType());
+   assertUnit(PAWN == (board.board[0][2])->getType());
+   assertUnit(PieceSpy::numConstruct == 0);
+   assertUnit(PieceSpy::numCopy == 0);
+   assertUnit(PieceSpy::numDelete == 0);
+   assertUnit(PieceSpy::numAssign == 0);
+   assertUnit(PieceSpy::numMove == 0);
+
+   // TEARDOWN
+   delete board.board[0][1];
+   delete board.board[0][2];
+   board.board[0][1] = board.board[0][2] = nullptr;
 }
 
 
@@ -156,7 +187,38 @@ void TestBoard::move_pawnSimple()
  ********************************************************/
 void TestBoard::move_pawnCapture()
 {
-	assertUnit(NOT_YET_IMPLEMENTED);
+   // SETUP
+   Move move;
+   move.source.set(0, 5);
+   move.dest.set(1, 6);
+   move.capture = ROOK;
+   move.promote = SPACE;
+   move.isWhite = true;
+   move.moveType = Move::MOVE;
+   Board board(nullptr, true /*noreset*/);
+   board.numMoves = 17;
+   board.board[0][5] = new PieceSpy(0, 5, true  /*isWhite*/, PAWN);
+   board.board[1][6] = new PieceSpy(1, 6, true, ROOK);
+   board.board[0][5]->nMoves = 17;
+   PieceSpy::reset();
+
+   // EXERCISE
+   board.move(move);
+
+   // VERIFY
+   assertUnit(18 == board.numMoves);
+   assertUnit(SPACE == (board.board[0][5]->getType()));
+   assertUnit(PAWN == (board.board[1][6])->getType());
+   assertUnit(PieceSpy::numConstruct == 0);
+   assertUnit(PieceSpy::numCopy == 0);
+   assertUnit(PieceSpy::numDelete == 0);
+   assertUnit(PieceSpy::numAssign == 0);
+   assertUnit(PieceSpy::numMove == 0);
+
+   // TEARDOWN
+   delete board.board[0][5];
+   delete board.board[1][6];
+   board.board[0][5] = board.board[1][6] = nullptr;
 }
 
 
@@ -177,7 +239,38 @@ void TestBoard::move_pawnCapture()
  ********************************************************/
 void TestBoard::move_pawnDouble()
 {
-	assertUnit(NOT_YET_IMPLEMENTED);
+   // SETUP
+   Move move;
+   move.source.set(4, 1);
+   move.dest.set(4, 3);
+   move.capture = SPACE;
+   move.promote = SPACE;
+   move.isWhite = true;
+   move.moveType = Move::MOVE;
+   Board board(nullptr, true /*noreset*/);
+   board.numMoves = 0;
+   board.board[4][1] = new PieceSpy(4, 1, true  /*isWhite*/, PAWN);
+   board.board[4][3] = new PieceSpy(4, 3, true  /*isWhite*/, SPACE);
+   board.board[4][1]->nMoves = 0;
+   PieceSpy::reset();
+
+   // EXERCISE
+   board.move(move);
+
+   // VERIFY
+   assertUnit(1 == board.numMoves);
+   assertUnit(SPACE == (board.board[4][1])->getType());
+   assertUnit(PAWN == (board.board[4][3])->getType());
+   assertUnit(PieceSpy::numConstruct == 0);
+   assertUnit(PieceSpy::numCopy == 0);
+   assertUnit(PieceSpy::numDelete == 0);
+   assertUnit(PieceSpy::numAssign == 0);
+   assertUnit(PieceSpy::numMove == 0);
+
+   // TEARDOWN
+   delete board.board[4][1];
+   delete board.board[4][3];
+   board.board[4][3] = board.board[1][6] = nullptr;
 }
 
 
@@ -198,7 +291,42 @@ void TestBoard::move_pawnDouble()
  ********************************************************/
 void TestBoard::move_pawnEnpassant()
 {
-	assertUnit(NOT_YET_IMPLEMENTED);
+   // SETUP
+   Move move;
+   move.source.set(0, 4);
+   move.dest.set(1, 5);
+   move.capture = PAWN;
+   move.promote = SPACE;
+   move.isWhite = true;
+   move.moveType = Move::ENPASSANT;
+   Board board(nullptr, true /*noreset*/);
+   board.numMoves = 1;
+   board.board[0][4] = new PieceSpy(0, 4, true  /*isWhite*/, PAWN);
+   board.board[1][4] = new PieceSpy(1, 4, false  /*isWhite*/, PAWN);
+   board.board[1][5] = new PieceSpy(1, 5, true  /*isWhite*/, SPACE);
+   board.board[1][4]->nMoves = 1;
+   board.board[0][4]->nMoves = 0;
+   PieceSpy::reset();
+
+   // EXERCISE
+   board.move(move);
+
+   // VERIFY
+   assertUnit(2 == board.numMoves);
+   assertUnit(SPACE == (board.board[0][4])->getType());
+   assertUnit(SPACE == (board.board[1][4])->getType());
+   assertUnit(PAWN == (board.board[1][5])->getType());
+   assertUnit(PieceSpy::numConstruct == 0);
+   assertUnit(PieceSpy::numCopy == 0);
+   assertUnit(PieceSpy::numDelete == 0);
+   assertUnit(PieceSpy::numAssign == 0);
+   assertUnit(PieceSpy::numMove == 0);
+
+   // TEARDOWN
+   delete board.board[0][4];
+   delete board.board[1][4];
+   delete board.board[1][5];
+   board.board[0][4] = board.board[1][4] = board.board[1][5] = nullptr;
 }
 
 
@@ -206,7 +334,7 @@ void TestBoard::move_pawnEnpassant()
  *    a7a8Q
  * +---a-b-c-d-e-f-g-h---+       +---a-b-c-d-e-f-g-h---+
  * |                     |       |                     |
- * 8   .                 8       8  (r)                8
+ * 8   .                 8       8  (q)                8
  * 7  (p)                7       7   .                 7
  * 6                     6       6                     6
  * 5                     5       5                     5
@@ -219,7 +347,37 @@ void TestBoard::move_pawnEnpassant()
  ********************************************************/
 void TestBoard::move_pawnPromotion()
 {
-	assertUnit(NOT_YET_IMPLEMENTED);
+   // SETUP
+   Move move;
+   move.source.set(0, 6);
+   move.dest.set(0, 7);
+   move.capture = SPACE;
+   move.promote = QUEEN;
+   move.isWhite = true;
+   move.moveType = Move::MOVE;
+   Board board(nullptr, true /*noreset*/);
+   board.numMoves = 1;
+   board.board[0][6] = new PieceSpy(0, 6, true  /*isWhite*/, PAWN);
+   board.board[0][7] = new PieceSpy(0, 7, true  /*isWhite*/, SPACE);
+   board.board[0][6]->nMoves = 0;
+   PieceSpy::reset();
+
+   // EXERCISE
+   board.move(move);
+
+   // VERIFY
+   assertUnit(2 == board.numMoves);
+   assertUnit(SPACE == (board.board[0][6])->getType());
+   assertUnit(QUEEN == (board.board[0][7])->getType());
+   assertUnit(PieceSpy::numConstruct == 0);
+   assertUnit(PieceSpy::numCopy == 0);
+   assertUnit(PieceSpy::numDelete == 1);
+   assertUnit(PieceSpy::numAssign == 0);
+   assertUnit(PieceSpy::numMove == 0);
+
+   // TEARDOWN
+   delete board.board[0][7];
+   board.board[0][6] = board.board[0][7] = nullptr;
 }
 
 
@@ -661,8 +819,41 @@ void TestBoard::move_kingAttack()
  ********************************************************/
 void TestBoard::move_kingShortCastle()
 {
-	
-    assertUnit(NOT_YET_IMPLEMENTED);
+   // SETUP
+   Move move;
+   move.source.set(4, 0);
+   move.dest.set(6, 0);
+   move.capture = SPACE;
+   move.promote = SPACE;
+   move.isWhite = true;
+   move.moveType = Move::CASTLE_KING;
+   Board board(nullptr, true /*noreset*/);
+   board.numMoves = 0;
+   board.board[4][0] = new PieceSpy(4, 0, true  /*isWhite*/, KING);
+   board.board[7][0] = new PieceSpy(7, 0, true /*isWhite*/, ROOK);
+   board.board[4][0]->nMoves = 0;
+   PieceSpy::reset();
+
+   // EXERCISE
+   board.move(move);
+
+   // VERIFY
+   assertUnit(1 == board.numMoves);
+   assertUnit(nullptr == (board.board[4][0]));
+   assertUnit(ROOK == (board.board[5][0])->getType());
+   assertUnit(KING == (board.board[6][0])->getType());
+   assertUnit(nullptr == (board.board[7][0]));
+   assertUnit(PieceSpy::numConstruct == 0);
+   assertUnit(PieceSpy::numCopy == 0);
+   assertUnit(PieceSpy::numDelete == 0);
+   assertUnit(PieceSpy::numAssign == 0);
+   assertUnit(PieceSpy::numMove == 0);
+
+   // TEARDOWN
+   delete board.board[5][0];
+   delete board.board[6][0];
+   board.board[5][0] = board.board[6][0] = nullptr;
+    
 
 }
 
@@ -685,7 +876,41 @@ void TestBoard::move_kingShortCastle()
  ********************************************************/
 void TestBoard::move_kingLongCastle()
 {
-	assertUnit(NOT_YET_IMPLEMENTED);
+   // SETUP
+   Move move;
+   move.source.set(4, 0);
+   move.dest.set(2, 0);
+   move.capture = SPACE;
+   move.promote = SPACE;
+   move.isWhite = true;
+   move.moveType = Move::CASTLE_QUEEN;
+   Board board(nullptr, true /*noreset*/);
+   board.numMoves = 0;
+   board.board[4][0] = new PieceSpy(4, 0, true  /*isWhite*/, KING);
+   board.board[0][0] = new PieceSpy(0, 0, true /*isWhite*/, ROOK);
+   board.board[4][0]->nMoves = 0;
+   PieceSpy::reset();
+
+   // EXERCISE
+   board.move(move);
+
+   // VERIFY
+   assertUnit(1 == board.numMoves);
+   assertUnit(nullptr == (board.board[0][0]));
+   assertUnit(nullptr == (board.board[1][0]));
+   assertUnit(KING == (board.board[2][0])->getType());
+   assertUnit(ROOK == (board.board[3][0])->getType());
+   assertUnit(nullptr == (board.board[4][0]));
+   assertUnit(PieceSpy::numConstruct == 0);
+   assertUnit(PieceSpy::numCopy == 0);
+   assertUnit(PieceSpy::numDelete == 0);
+   assertUnit(PieceSpy::numAssign == 0);
+   assertUnit(PieceSpy::numMove == 0);
+
+   // TEARDOWN
+   delete board.board[2][0];
+   delete board.board[3][0];
+   board.board[2][0] = board.board[3][0] = nullptr;
 }
 
 
@@ -707,7 +932,75 @@ void TestBoard::move_kingLongCastle()
  ********************************************************/
 void TestBoard::construct_default()
 {
-	assertUnit(NOT_YET_IMPLEMENTED);
+   // SETUP
+   // Exercise
+   Board board;
+   // Verify
+     assertUnit(0 == board.numMoves);
+     assertUnit(ROOK == board.board[0][0]->getType());
+     assertUnit(KNIGHT == board.board[1][0]->getType());
+     assertUnit(BISHOP == board.board[2][0]->getType());
+     assertUnit(QUEEN == board.board[3][0]->getType());
+     assertUnit(KING == board.board[4][0]->getType());
+     assertUnit(BISHOP == board.board[5][0]->getType());
+     assertUnit(KNIGHT == board.board[6][0]->getType());
+     assertUnit(ROOK == board.board[7][0]->getType());
+     assertUnit(PAWN == board.board[0][1]->getType());
+     assertUnit(PAWN == board.board[1][1]->getType());
+     assertUnit(PAWN == board.board[2][1]->getType());
+     assertUnit(PAWN == board.board[3][1]->getType());
+     assertUnit(PAWN == board.board[4][1]->getType());
+     assertUnit(PAWN == board.board[5][1]->getType());
+     assertUnit(PAWN == board.board[6][1]->getType());
+     assertUnit(PAWN == board.board[7][1]->getType());
+     assertUnit(nullptr == board.board[0][2]);
+     assertUnit(nullptr == board.board[1][2]);
+     assertUnit(nullptr == board.board[2][2]);
+     assertUnit(nullptr == board.board[3][2]);
+     assertUnit(nullptr == board.board[4][2]);
+     assertUnit(nullptr == board.board[5][2]);
+     assertUnit(nullptr == board.board[6][2]);
+     assertUnit(nullptr == board.board[7][2]);
+     assertUnit(nullptr == board.board[0][3]);
+     assertUnit(nullptr == board.board[1][3]);
+     assertUnit(nullptr == board.board[2][3]);
+     assertUnit(nullptr == board.board[3][3]);
+     assertUnit(nullptr == board.board[4][3]);
+     assertUnit(nullptr == board.board[5][3]);
+     assertUnit(nullptr == board.board[6][3]);
+     assertUnit(nullptr == board.board[7][3]);
+     assertUnit(nullptr == board.board[0][4]);
+     assertUnit(nullptr == board.board[1][4]);
+     assertUnit(nullptr == board.board[2][4]);
+     assertUnit(nullptr == board.board[3][4]);
+     assertUnit(nullptr == board.board[4][4]);
+     assertUnit(nullptr == board.board[5][4]);
+     assertUnit(nullptr == board.board[6][4]);
+     assertUnit(nullptr == board.board[7][4]);
+     assertUnit(nullptr == board.board[0][5]);
+     assertUnit(nullptr == board.board[1][5]);
+     assertUnit(nullptr == board.board[2][5]);
+     assertUnit(nullptr == board.board[3][5]);
+     assertUnit(nullptr == board.board[4][5]);
+     assertUnit(nullptr == board.board[5][5]);
+     assertUnit(nullptr == board.board[6][5]);
+     assertUnit(nullptr == board.board[7][5]);
+     assertUnit(PAWN == board.board[0][6]->getType());
+     assertUnit(PAWN == board.board[1][6]->getType());
+     assertUnit(PAWN == board.board[2][6]->getType());
+     assertUnit(PAWN == board.board[3][6]->getType());
+     assertUnit(PAWN == board.board[4][6]->getType());
+     assertUnit(PAWN == board.board[5][6]->getType());
+     assertUnit(PAWN == board.board[6][6]->getType());
+     assertUnit(PAWN == board.board[7][6]->getType());
+     assertUnit(ROOK == board.board[0][7]->getType());
+     assertUnit(KNIGHT == board.board[1][7]->getType());
+     assertUnit(BISHOP == board.board[2][7]->getType());
+     assertUnit(QUEEN == board.board[3][7]->getType());
+     assertUnit(KING == board.board[4][7]->getType());
+     assertUnit(BISHOP == board.board[5][7]->getType());
+     assertUnit(KNIGHT == board.board[6][7]->getType());
+     assertUnit(ROOK == board.board[7][7]->getType());
 }
 
 
