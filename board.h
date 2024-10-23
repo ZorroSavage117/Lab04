@@ -43,10 +43,10 @@ public:
 
    // create and destroy the board
    Board(ogstream* pgout = nullptr, bool noreset = false);
-   virtual ~Board()   {  }
+   virtual ~Board()   { }
 
    // getters
-   virtual int  getCurrentMove() const { return numMoves;      }
+   virtual int  getCurrentMove() const { return numMoves; }
    virtual bool whiteTurn()const;
    virtual void display(const Position& posHover, const Position& posSelect) const;
    virtual const Piece& operator [] (const Position& pos) const;
@@ -81,7 +81,7 @@ public:
    void display(const Position& posHover,
                 const Position& posSelect) const          { assert(false); }
    void reset(bool fFree = true)                          { assert(false); }
-   void move       (const Move& move)                     { assert(false); }
+   void move(const Move& move)                            { assert(false); }
    void undo()                                            { assert(false); }
    int  getCurrentMove() const                            { assert(false); return 0; }
    bool whiteTurn()      const                            { assert(false); return false; }
@@ -121,11 +121,5 @@ public:
       else
          return *pSpace;
    }
-
-
-
-
-
    int  getCurrentMove() const { return moveNumber; }
 };
-
