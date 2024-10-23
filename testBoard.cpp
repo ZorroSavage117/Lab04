@@ -2,7 +2,7 @@
  * Source File:
  *    TEST BOARD
  * Author:
- *    <your name here>
+ *    Daniel Carr
  * Summary:
  *    The unit tests for board
  ************************************************************************/
@@ -13,8 +13,6 @@
 #include "piece.h"
 #include "board.h"
 #include <cassert>
-
-
 
 
 /********************************************************
@@ -107,7 +105,6 @@ void TestBoard::move_knightAttack()
    assertUnit(KNIGHT == (board.board[2][5])->getType());
    assertUnit(PieceSpy::numConstruct == 0);
    assertUnit(PieceSpy::numCopy == 0);
-   //std::cout << PieceSpy::numDelete << std::endl;
    assertUnit(PieceSpy::numDelete == 0);
    assertUnit(PieceSpy::numAssign == 0);
    assertUnit(PieceSpy::numMove == 0);
