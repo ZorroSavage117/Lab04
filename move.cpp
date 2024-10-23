@@ -31,6 +31,7 @@ Move::Move()
 
 /***************************************************
  * MOVE : NON-DEFAULT CONSTRUCTOR
+ * Takes a string in Smith notation and a color
  ***************************************************/
 Move::Move(string smith, bool white)
 {
@@ -162,72 +163,129 @@ Move::Move(string smith, bool white)
 /***************************************************
  * MOVE : Getters and Setters
  ***************************************************/
+
+ /**************************************************
+ * Move::getSource
+ * Returns the source position of the move
+ * **************************************************/
 Position Move::getSource()
 {
 	return source;
 }
 
+/**************************************************
+* Move::setSource
+* Sets the source position of the move
+***************************************************/
 void Move::setSource(Position s)
 {
 	source = s;
 }
 
+/**************************************************
+* Move::getDest
+* Returns the destination position of the move
+* **************************************************/
 Position Move::getDest()
 {
 	return dest;
 }
 
+/**************************************************
+* Move::setDest
+* Sets the destination position of the move
+* **************************************************/
 void Move::setDest(Position d)
 {
 	dest = d;
 	//text += d;
 }
 
+/**************************************************
+* Move::getPromote
+* Returns the piece type to promote to
+* **************************************************/
 PieceType Move::getPromote()
 {
 	return promote;
 }
 
+/**************************************************
+* Move::setPromote
+* Sets the piece type to promote to
+* **************************************************/
 void Move::setPromote(PieceType pro)
 {
 	promote = pro;
 }
 
+/**************************************************
+* Move::getCapture
+* Returns the piece type to capture
+* **************************************************/
 PieceType Move::getCapture()
 {
 	return capture;
 }
 
+/**************************************************
+* Move::setCapture
+* Sets the piece type to capture
+* **************************************************/
 void Move::setCapture(PieceType cap)
 {
 	capture = cap;
 }
 
+/**************************************************
+* Move::getMoveType
+* Returns the type of move
+* **************************************************/
 Move::MoveType Move::getMoveType()
 {
 	return moveType;
 }
 
+/**************************************************
+* Move::setMoveType
+* Sets the type of move
+* **************************************************/
 void Move::setMoveType(MoveType m)
 {
 	moveType = m;
 }
 
+/**************************************************
+* Move::getIsWhite
+* Returns the color of the piece making the move
+* **************************************************/
 bool Move::getIsWhite()
 {
 	return isWhite;
 }
 
+/**************************************************
+* Move::setIsWhite
+* Sets the color of the piece making the move
+* **************************************************/
 void Move::setIsWhite(bool w)
 {
 	isWhite = w;
 }
 
+/**************************************************
+* Move::getSmith
+* Returns the move in Smith notation
+* **************************************************/
 string Move::getSmith() const
 {
 	return text;
 }
 
+/**************************************************
+* Move::conv
+* Converts a column number to a letter
+* **************************************************/
 char Move::conv(int col)
 {
 	switch (col + 1)
@@ -259,6 +317,10 @@ char Move::conv(int col)
 	}
 }
 
+/**************************************************
+* Move::getText
+* Returns the move in Smith notation
+* **************************************************/
 string Move::getText(Position sour, Position des, MoveType type, PieceType cap, PieceType pro)
 {
 	string s;
@@ -345,6 +407,10 @@ string Move::getText(Position sour, Position des, MoveType type, PieceType cap, 
 	return text;
 }
 
+/**************************************************
+* Move::setText
+* Sets the move in Smith notation
+* **************************************************/
 void Move::setText(string smith)
 {
 	text = smith;
@@ -471,6 +537,10 @@ void Move::setText(string smith)
 	}
 }
 
+/**************************************************
+* Move::letterFromPieceType
+* Returns the letter representation of a piece type
+* **************************************************/
 char Move::letterFromPieceType(PieceType pt) const
 {
 	switch (pt) {
@@ -484,6 +554,10 @@ char Move::letterFromPieceType(PieceType pt) const
 	}
 }
 
+/**************************************************
+* Move::pieceTypeFromLetter
+* Returns the piece type from a letter representation
+* **************************************************/
 PieceType Move::pieceTypeFromLetter(char letter) const
 {
 	switch (letter) {
@@ -500,6 +574,11 @@ PieceType Move::pieceTypeFromLetter(char letter) const
 /***************************************************
  * MOVE : Operators
  ***************************************************/
+
+ /**************************************************
+ * Move::operator==
+ * compares the numbers of location known as start and dest
+ * **************************************************/
 bool Move::operator==(const Move& rhs) const // compares the numbers of location known as start and dest
 {
 	Position sor1;
@@ -536,6 +615,10 @@ bool Move::operator==(const Move& rhs) const // compares the numbers of location
 	}
 }
 
+/**************************************************
+* Move::operator<
+* compares the numbers of location known as start and dest
+* **************************************************/
 bool Move::operator<(const Move& rhs) const
 {
 	Position sor1;
