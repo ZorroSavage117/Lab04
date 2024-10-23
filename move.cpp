@@ -29,6 +29,9 @@ Move::Move()
 	text = "";
 }
 
+/***************************************************
+ * MOVE : NON-DEFAULT CONSTRUCTOR
+ ***************************************************/
 Move::Move(string smith, bool white)
 {
 	source = smith.substr(0, 2);
@@ -156,17 +159,9 @@ Move::Move(string smith, bool white)
 	text = smith;
 }
 
-//Move::Move(Position s, Position d, MoveType m, PieceType cap, PieceType pro, bool white)
-//{
-//	isWhite = white;
-//	source = s;
-//	dest = d;
-//	promote = pro;
-//	capture = cap;
-//	moveType = m;
-//	//text = source + dest; //+ if cap, pro, move;
-//}
-
+/***************************************************
+ * MOVE : Getters and Setters
+ ***************************************************/
 Position Move::getSource()
 {
 	return source;
@@ -502,6 +497,9 @@ PieceType Move::pieceTypeFromLetter(char letter) const
 	}
 }
 
+/***************************************************
+ * MOVE : Operators
+ ***************************************************/
 bool Move::operator==(const Move& rhs) const // compares the numbers of location known as start and dest
 {
 	Position sor1;
@@ -573,7 +571,3 @@ bool Move::operator<(const Move& rhs) const
 		return false;
 	}
 }
-
-
-
-

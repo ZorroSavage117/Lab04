@@ -17,11 +17,6 @@
   *********************************************/
 void Pawn::getMoves(set<Move>& moves, const Board& board) const
 {
-	// the possible moves for a pawn are:
-	// if nMoves == 0, it can move 1 or 2 spaces forward // done
-	// if nMoves > 0, it can only move 1 space forward   // done
-	// if there is an enemy piece diagonally in front of it and it just moved 2 spaces, it can capture it en passant
-
 	const Position currentPos = this->getPosition();
 	Move newMove;
 	string smith;
