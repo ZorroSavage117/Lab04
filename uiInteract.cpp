@@ -147,7 +147,7 @@ void moveCallback(int x, int y)
    Position pos;
 
    // get coordinates from screen dimensions
-   pos.setXY((double)x -51,(( (double)y -51)));
+   pos.setXY((double)x,  (double)y );
 
    ui.setHoverPosition(pos);
 }

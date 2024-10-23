@@ -137,11 +137,11 @@ const Position& Position:: operator=(const string& rhs)
 void Position::setXY(double x, double y)
 {
    if (squareWidth > 0 && squareHeight > 0) {
-      int col = static_cast<int>(x / squareWidth);
-      int row = static_cast<int>(y / squareHeight);
+      int col = static_cast<int>((x-50) / squareWidth);
+      int row = 7- (static_cast<int>(((y-50) / squareHeight)));
 
       if (col >= 0 && col < 8 && row >= 0 && row < 8) {
-         colRow = (col << 4) | row;
+         colRow = (col << 4) | (row);
       }
       else {
          colRow = 0xff;
