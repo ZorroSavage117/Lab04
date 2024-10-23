@@ -122,6 +122,11 @@ void Board::display(const Position& posHover, const Position& posSelect) const
 			piece->display(pgout);
 		}
 	}
+	// draw the hover piece
+	if (posHover.isValid())
+	{
+		pgout->drawHover(posHover);
+	}
 }
 
 /************************************************
