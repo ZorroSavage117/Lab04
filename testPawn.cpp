@@ -118,6 +118,12 @@ void TestPawn::getMoves_initialAdvanceWhite()
 	// Exercise
 	pawn.getMoves(moves, board);
 
+	//debug
+	//std::cout << "Moves: " << moves.size() << std::endl;
+	for (const Move& element : moves) {
+		//std::cout << element.getSmith() << std::endl;
+	}
+
 	// Verify
 	assertUnit(moves.size() == 2);  // many possible moves
 	assertUnit(moves.find(Move("b2b3")) != moves.end());

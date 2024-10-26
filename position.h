@@ -11,6 +11,7 @@
 
 #include <string>
 #include <cstdint>
+#include <iostream>
 using std::string;
 using std::ostream;
 using std::istream;
@@ -57,7 +58,7 @@ public:
    bool operator <  (const Position& rhs) const { return colRow < rhs.colRow; }
    bool operator == (const Position& rhs) const { return colRow == rhs.colRow; }
    bool operator != (const Position& rhs) const { return colRow != rhs.colRow; }
-   const Position& operator =  (const Position& rhs) { this->colRow = rhs.colRow; return *this; }
+   const Position& operator =  (const Position& rhs) { this->colRow = rhs.colRow; return *this; } //{set(rhs.colRow); return *this;} 
 
    // Location : The Position class can work with locations, which
    //            are 0...63 where we start in row 0, then row 1, etc.

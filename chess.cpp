@@ -18,6 +18,7 @@
 #include <cassert>        // for ASSERT
 #include <fstream>        // for IFSTREAM
 #include <string>         // for STRING
+#include <iostream>       // for COUT
 using namespace std;
 
 
@@ -28,20 +29,23 @@ using namespace std;
  * engine will wait until the proper amount of
  * time has passed and put the drawing on the screen.
  **************************************/
-void callBack(Interface *pUI, void * p)
+void callBack(Interface* pUI, void* p)
 {
-   // the first step is to cast the void pointer into a game object. This
-   // is the first step of every single callback function in OpenGL. 
-   Board * pBoard = (Board *)p;  
+	// the first step is to cast the void pointer into a game object. This
+	// is the first step of every single callback function in OpenGL. 
+	Board* pBoard = (Board*)p;
 
- // hover
+	// hover
 
-   Position posHover = pUI->getHoverPosition();
-   Position posSelect = pUI->getSelectPosition();
+	Position posHover = pUI->getHoverPosition();
+	Position posSelect = pUI->getSelectPosition();
+	Position posSelectPrevious = pUI->getPreviousPosition();
 
-   pBoard->display(posHover, posSelect);
-
-
+	//std::cout << "hover:" << posHover << std::endl;
+	/*std::cout << "posSelect" << posSelect << std::endl;
+	std::cout << "posSelectPrevious" << posSelectPrevious << std::endl;*/
+	pBoard->display(posHover, posSelect, pBoard, posSelectPrevious);
+	
 }
 
 

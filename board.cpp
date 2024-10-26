@@ -44,6 +44,7 @@ void Board::reset(bool fFree)
 	for (int r = 0; r < 8; r++)
 		for (int c = 0; c < 8; c++)
 			board[c][r] = nullptr;
+	/*
 	// white pieces
 	board[1][7] = new Knight(Position(1, 7), true);
 	board[6][7] = new Knight(Position(6, 7), true);
@@ -62,7 +63,7 @@ void Board::reset(bool fFree)
 	board[6][6] = new Pawn(Position(6, 6), true);
 	board[7][6] = new Pawn(Position(7, 6), true);
 
-	// black pieces
+	// white pieces
 	board[1][0] = new Knight(Position(1, 0), false);
 	board[6][0] = new Knight(Position(6, 0), false);
 	board[0][0] = new Rook(Position(0, 0), false);
@@ -79,6 +80,44 @@ void Board::reset(bool fFree)
 	board[5][1] = new Pawn(Position(5, 1), false);
 	board[6][1] = new Pawn(Position(6, 1), false);
 	board[7][1] = new Pawn(Position(7, 1), false);
+	*/
+	
+	// black pieces
+	board[1][7] = new Knight(Position(1, 7), false);
+	board[6][7] = new Knight(Position(6, 7), false);
+	board[0][7] = new Rook(Position(0, 7), false);
+	board[7][7] = new Rook(Position(7, 7), false);
+	board[2][7] = new Bishop(Position(2, 7), false);
+	board[5][7] = new Bishop(Position(5, 7), false);
+	board[3][7] = new Queen(Position(3, 7), false);
+	board[4][7] = new King(Position(4, 7), false);
+	board[0][6] = new Pawn(Position(0, 6), false);
+	board[1][6] = new Pawn(Position(1, 6), false);
+	board[2][6] = new Pawn(Position(2, 6), false);
+	board[3][6] = new Pawn(Position(3, 6), false);
+	board[4][6] = new Pawn(Position(4, 6), false);
+	board[5][6] = new Pawn(Position(5, 6), false);
+	board[6][6] = new Pawn(Position(6, 6), false);
+	board[7][6] = new Pawn(Position(7, 6), false);
+
+	// white pieces
+	board[1][0] = new Knight(Position(1, 0), true);
+	board[6][0] = new Knight(Position(6, 0), true);
+	board[0][0] = new Rook(Position(0, 0), true);
+	board[7][0] = new Rook(Position(7, 0), true);
+	board[2][0] = new Bishop(Position(2, 0), true);
+	board[5][0] = new Bishop(Position(5, 0), true);
+	board[3][0] = new Queen(Position(3, 0), true);
+	board[4][0] = new King(Position(4, 0), true);
+	board[0][1] = new Pawn(Position(0, 1), true);
+	board[1][1] = new Pawn(Position(1, 1), true);
+	board[2][1] = new Pawn(Position(2, 1), true);
+	board[3][1] = new Pawn(Position(3, 1), true);
+	board[4][1] = new Pawn(Position(4, 1), true);
+	board[5][1] = new Pawn(Position(5, 1), true);
+	board[6][1] = new Pawn(Position(6, 1), true);
+	board[7][1] = new Pawn(Position(7, 1), true);
+	
 }
 
 /***********************************************
@@ -108,57 +147,75 @@ const Piece& Board::operator[](const Position& pos) const
 	}
 }
 
-//void Board::getMoves(set<Move>& moves, PieceType type) const
-//{
-//	switch (type)
-//	{
-//	case PAWN:
-//		Pawn pawn;
-//		pawn.getMoves(moves, *this);
-//		break;
-//	case KNIGHT:
-//		Knight knight;
-//		knight.getMoves(moves, *this);
-//		break;
-//	case BISHOP:
-//		Bishop bishop;
-//		bishop.getMoves(moves, *this);
-//		break;
-//	case ROOK:
-//		Rook rook;
-//		rook.getMoves(moves, *this);
-//		break;
-//	case QUEEN:
-//		Queen queen;
-//		queen.getMoves(moves, *this);
-//		break;
-//	case KING:
-//		King king;
-//		king.getMoves(moves, *this);
-//		break;
-//	default:
-//		break;
-//	}
-//}
-
 /***********************************************
  * BOARD : DISPLAY
  *         Display the board
  ***********************************************/
-void Board::display(const Position& posHover, const Position& posSelect) const
+void Board::display(const Position& posHover, const Position& posSelect, Board* pBoard, Position& posSelectPrevious)
 {
 	pgout->drawBoard();
 	pgout->drawHover(posHover);
 	pgout->drawSelected(posSelect);
-	/*set<Move> moves;
-	Piece & = Piece;
-		.getMoves(moves
-	pgout->drawPossible(posSelect);*/
-	for each (Piece* piece in board)
+	Piece* piece(board[posSelect.getCol()][posSelect.getRow()]);
+	Piece* dummyPiece(board[0xFFFFFFFFFFFFFFFF][0xFFFFFFFFFFFFFFFF]);
+	if (piece != dummyPiece)
 	{
 		if ((piece != nullptr) && (piece->getType() != SPACE))
 		{
-			
+			set<Move> moves;
+			if (piece->getType() == PAWN)
+			{
+				Pawn pawn(*piece);
+				pawn.getMoves(moves, *this);
+				//std::cout << "Moves: " << moves.size() << std::endl;
+				for (const Move& element : moves) {
+					//std::cout << element.getSmith() << std::endl;
+				}
+
+			}
+			else if (piece->getType() == KNIGHT)
+			{
+				Knight knight(*piece);
+				knight.getMoves(moves, *this);
+				//std::cout << "Moves: " << moves.size() << std::endl;
+				for (const Move& element : moves) {
+					//std::cout << element.getSmith() << std::endl;
+				}
+			}
+			else if (piece->getType() == BISHOP)
+			{
+				Bishop bishop(*piece);
+				bishop.getMoves(moves, *this);
+			}
+			else if (piece->getType() == ROOK)
+			{
+				Rook rook(*piece);
+				rook.getMoves(moves, *this);
+			}
+			else if (piece->getType() == QUEEN)
+			{
+				Queen queen(*piece);
+				queen.getMoves(moves, *this);
+			}
+			else if (piece->getType() == KING)
+			{
+				King king(*piece);
+				king.getMoves(moves, *this);
+			}
+			set <Move> ::iterator it;
+			for (it = moves.begin(); it != moves.end(); ++it)
+			{
+				Move move = *it;
+				pgout->drawPossible(move.getDest());
+			}
+
+		}
+	}
+	for each (Piece * piece in board)
+	{
+		if ((piece != nullptr) && (piece->getType() != SPACE))
+		{
+
 			//if (piece->getPosition() == posSelect)
 			//{
 			//	set<Move> moves;
@@ -174,11 +231,70 @@ void Board::display(const Position& posHover, const Position& posSelect) const
 		}
 
 	}
-	// draw the hover piece
-	/*if (posHover.isValid())
+
+	if (posSelectPrevious != nullptr && posSelectPrevious != 0x99)
 	{
-		pgout->drawHover(posHover);
-	}*/
+		Piece* piece(&pBoard->getPiece(posSelectPrevious));
+		set<Move> moves;
+		if ((piece != nullptr) && (piece->getType() != SPACE))
+		{
+			set<Move> moves;
+			if (piece->getType() == PAWN)
+			{
+				Pawn pawn(*piece);
+				pawn.getMoves(moves, *this);
+				//std::cout << "Moves: " << moves.size() << std::endl;
+				for (const Move& element : moves) {
+					//std::cout << element.getSmith() << std::endl;
+				}
+
+			}
+			else if (piece->getType() == KNIGHT)
+			{
+				Knight knight(*piece);
+				knight.getMoves(moves, *this);
+				//std::cout << "Moves: " << moves.size() << std::endl;
+				for (const Move& element : moves) {
+					//std::cout << element.getSmith() << std::endl;
+				}
+			}
+			else if (piece->getType() == BISHOP)
+			{
+				Bishop bishop(*piece);
+				bishop.getMoves(moves, *this);
+			}
+			else if (piece->getType() == ROOK)
+			{
+				Rook rook(*piece);
+				rook.getMoves(moves, *this);
+			}
+			else if (piece->getType() == QUEEN)
+			{
+				Queen queen(*piece);
+				queen.getMoves(moves, *this);
+			}
+			else if (piece->getType() == KING)
+			{
+				King king(*piece);
+				king.getMoves(moves, *this);
+			}
+			piece->getMoves(moves, *pBoard);
+			for each (Move move in moves)
+			{
+				/*std::cout << move.getDest() << std::endl;
+				std::cout << posSelect << std::endl;*/
+				if (posSelect == move.getDest())
+				{
+					pBoard->move(move);
+				}
+			}
+		}
+		// draw the hover piece
+		/*if (posHover.isValid())
+		{
+			pgout->drawHover(posHover);
+		}*/
+	}
 }
 
 /************************************************
@@ -329,16 +445,28 @@ void Board::move(Move& move)
 			board[posDest.getCol()][posDest.getRow()] = space ;
 		}
 		// if the move is not a capture
-		if (move.getCapture() == SPACE)
+		if (move.getCapture() == SPACE || move.getDest() == nullptr)
 		{
 			const Position posSource = move.getSource();
 			const Position posDest = move.getDest();
 			Piece* curMovePiece = board[posSource.getCol()][posSource.getRow()];
-			Piece* destPiece = board[posDest.getCol()][posDest.getRow()];
-			curMovePiece->setPosition(posDest);
-			destPiece->setPosition(posSource);
-			board[posDest.getCol()][posDest.getRow()] = curMovePiece;
-			board[posSource.getCol()][posSource.getRow()] = destPiece;
+			if (move.getDest() == nullptr)
+			{
+				Space* destPiece = new Space(posDest);
+				curMovePiece->setPosition(posDest);
+				destPiece->setPosition(posSource);
+				board[posDest.getCol()][posDest.getRow()] = curMovePiece;
+				board[posSource.getCol()][posSource.getRow()] = destPiece;
+			}
+			else
+			{
+				Piece* destPiece = board[posDest.getCol()][posDest.getRow()];
+				curMovePiece->setPosition(posDest);
+				destPiece->setPosition(posSource);
+				board[posDest.getCol()][posDest.getRow()] = curMovePiece;
+				board[posSource.getCol()][posSource.getRow()] = destPiece;
+			}
+
 		}
 		// if the move is a capture
 		else
