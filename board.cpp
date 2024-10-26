@@ -281,8 +281,8 @@ void Board::display(const Position& posHover, const Position& posSelect, Board* 
 			piece->getMoves(moves, *pBoard);
 			for each (Move move in moves)
 			{
-				std::cout << move.getDest() << std::endl;
-				std::cout << posSelect << std::endl;
+				/*std::cout << move.getDest() << std::endl;
+				std::cout << posSelect << std::endl;*/
 				if (posSelect == move.getDest())
 				{
 					pBoard->move(move);

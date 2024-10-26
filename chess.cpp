@@ -42,8 +42,8 @@ void callBack(Interface* pUI, void* p)
 	Position posSelectPrevious = pUI->getPreviousPosition();
 
 	//std::cout << "hover:" << posHover << std::endl;
-	std::cout << "posSelect" << posSelect << std::endl;
-	std::cout << "posSelectPrevious" << posSelectPrevious << std::endl;
+	/*std::cout << "posSelect" << posSelect << std::endl;
+	std::cout << "posSelectPrevious" << posSelectPrevious << std::endl;*/
 	pBoard->display(posHover, posSelect, pBoard, posSelectPrevious);
 	
 }

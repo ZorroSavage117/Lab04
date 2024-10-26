@@ -119,9 +119,9 @@ void TestPawn::getMoves_initialAdvanceWhite()
 	pawn.getMoves(moves, board);
 
 	//debug
-	std::cout << "Moves: " << moves.size() << std::endl;
+	//std::cout << "Moves: " << moves.size() << std::endl;
 	for (const Move& element : moves) {
-		std::cout << element.getSmith() << std::endl;
+		//std::cout << element.getSmith() << std::endl;
 	}
 
 	// Verify
