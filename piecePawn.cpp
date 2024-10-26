@@ -37,17 +37,17 @@ void Pawn::getMoves(set<Move>& moves, const Board& board) const
 		if (destPosWA.isValid())
 		{
 			// white move 1 space forward and premote to queen if it reaches the end of the board
-			const Piece* pTarget = &(board[destPosWA]); // Get piece at new position
+			const Piece* pTarget(& (board[destPosWA])); // Get piece at new position
 			if (currentPos.getRow() == 6)
 			{
-				if (pTarget->getType() == PieceType::SPACE)
+				if (pTarget == nullptr || pTarget->getType() == PieceType::SPACE)
 				{
 					smith = newMove.getText(currentPos, destPosWA, Move::MOVE, PieceType::SPACE, PieceType::QUEEN);
 					moves.insert(Move(smith));
 				}
 			}
 			// white move 1 space forward
-			else if (pTarget->getType() == PieceType::SPACE)
+			else if (pTarget == nullptr || pTarget->getType() == PieceType::SPACE)
 			{
 				smith = newMove.getText(currentPos, destPosWA, Move::MOVE);
 				moves.insert(Move(smith));
@@ -60,8 +60,8 @@ void Pawn::getMoves(set<Move>& moves, const Board& board) const
 			Position destPosWB(newCol, newRow);
 			if (destPosWB.isValid())
 			{
-				const Piece* pTarget = &(board[destPosWB]);
-				if (pTarget->isWhite() != fWhite && pTarget->getType() != PieceType::SPACE)
+				const Piece* pTarget(& (board[destPosWB]));
+				if ((pTarget != nullptr) && (pTarget->isWhite() != fWhite) && (pTarget->getType() != PieceType::SPACE))
 				{
 					// white capture and premote to queen if it reaches the end of the board
 					if (currentPos.getRow() == 6)
@@ -79,7 +79,7 @@ void Pawn::getMoves(set<Move>& moves, const Board& board) const
 				// white en passant
 				Position enpassantPos(newCol, currentPos.getRow());
 				const Piece* pEnpassant = &(board[enpassantPos]);
-				if (pTarget->getType() == PieceType::SPACE && pEnpassant->isWhite() != fWhite && pEnpassant->getType() == PieceType::PAWN && pEnpassant->justMoved(true) && currentPos.getRow() == 4)
+				if (((pTarget == nullptr) || pTarget->getType() == PieceType::SPACE) && pEnpassant->isWhite() != fWhite && pEnpassant->getType() == PieceType::PAWN && pEnpassant->justMoved(true) && currentPos.getRow() == 4)
 				{
 					smith = newMove.getText(currentPos, destPosWB, Move::ENPASSANT, PieceType::PAWN);
 					moves.insert(Move(smith));
@@ -91,9 +91,9 @@ void Pawn::getMoves(set<Move>& moves, const Board& board) const
 		{
 			newRow += 1;
 			Position destPosWC(currentPos.getCol(), newRow);
-			const Piece* pTarget = &(board[destPosWC]); // Get piece at new position
+			const Piece* pTarget( &(board[destPosWC])); // Get piece at new position
 			// If there's no piece, it's a valid move
-			if (pTarget->getType() == PieceType::SPACE)
+			if ((pTarget == nullptr) || pTarget->getType() == PieceType::SPACE)
 			{
 				smith = newMove.getText(currentPos, destPosWC, Move::MOVE);
 				moves.insert(Move(smith));
@@ -109,17 +109,17 @@ void Pawn::getMoves(set<Move>& moves, const Board& board) const
 		if (destPosBA.isValid())
 		{
 			// black move 1 space forward and premote to queen if it reaches the end of the board
-			const Piece* pTarget = &(board[destPosBA]); // Get piece at new position
+			const Piece* pTarget(&(board[destPosBA])); // Get piece at new position
 			if (currentPos.getRow() == 1)
 			{
-				if (pTarget->getType() == PieceType::SPACE)
+				if (pTarget == nullptr || pTarget->getType() == PieceType::SPACE)
 				{
 					smith = newMove.getText(currentPos, destPosBA, Move::MOVE, PieceType::SPACE, PieceType::QUEEN);
 					moves.insert(Move(smith));
 				}
 			}
 			// black move 1 space forward
-			else if (pTarget->getType() == PieceType::SPACE)
+			else if (pTarget == nullptr || pTarget->getType() == PieceType::SPACE)
 			{
 				smith = newMove.getText(currentPos, destPosBA, Move::MOVE);
 				moves.insert(Move(smith));
@@ -132,8 +132,8 @@ void Pawn::getMoves(set<Move>& moves, const Board& board) const
 			Position destPosBB(newCol, newRow);
 			if (destPosBB.isValid())
 			{
-				const Piece* pTarget = &(board[destPosBB]);
-				if (pTarget->isWhite() != fWhite && pTarget->getType() != PieceType::SPACE)
+				const Piece* pTarget(&(board[destPosBB]));
+				if (pTarget != nullptr && pTarget->isWhite() != fWhite && pTarget->getType() != PieceType::SPACE)
 				{
 					// black capture and premote to queen if it reaches the end of the board
 					if (currentPos.getRow() == 1)
@@ -151,7 +151,7 @@ void Pawn::getMoves(set<Move>& moves, const Board& board) const
 				// black en passant
 				Position enpassantPos(newCol, currentPos.getRow());
 				const Piece* pEnpassant = &(board[enpassantPos]);
-				if (pTarget->getType() == PieceType::SPACE && pEnpassant->isWhite() != fWhite && pEnpassant->getType() == PieceType::PAWN && pEnpassant->justMoved(true) && currentPos.getRow() == 3)
+				if ((pTarget == nullptr || pTarget->getType() == PieceType::SPACE) && pEnpassant->isWhite() != fWhite && pEnpassant->getType() == PieceType::PAWN && pEnpassant->justMoved(true) && currentPos.getRow() == 3)
 				{
 					smith = newMove.getText(currentPos, destPosBB, Move::ENPASSANT, PieceType::PAWN);
 					moves.insert(Move(smith));
@@ -163,9 +163,9 @@ void Pawn::getMoves(set<Move>& moves, const Board& board) const
 		{
 			newRow -= 1;
 			Position destPosBC(currentPos.getCol(), newRow);
-			const Piece* pTarget = &(board[destPosBC]); // Get piece at new position
+			const Piece* pTarget(&(board[destPosBC])); // Get piece at new position
 			// If there's no piece, it's a valid move
-			if (pTarget->getType() == PieceType::SPACE)
+			if ((pTarget == nullptr) || pTarget->getType() == PieceType::SPACE)
 			{
 				smith = newMove.getText(currentPos, destPosBC, Move::MOVE);
 				moves.insert(Move(smith));

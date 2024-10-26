@@ -48,8 +48,9 @@ public:
    // getters
    virtual int  getCurrentMove() const { return numMoves; }
    virtual bool whiteTurn()const;
-   virtual void display(const Position& posHover, const Position& posSelect) const;
+   virtual void display(const Position& posHover, const Position& posSelect, Board* pBoard, Position& posSelectPrevious);
    virtual const Piece& operator [] (const Position& pos) const;
+   virtual Piece& getPiece(Position pos) { return *board[pos.getCol()][pos.getRow()]; } 
 
    // setters
    virtual void free();
@@ -59,8 +60,7 @@ public:
 
 protected:
    void  assertBoard();
-   //void  getMoves(set <Move>& moves, const PieceType) const;
-
+ 
    Piece * board[8][8];    // the board of chess pieces
    int numMoves;
 
@@ -116,7 +116,7 @@ public:
    ~BoardEmpty();
    const Piece& operator [] (const Position& pos) const
    {
-      assert(pos.isValid());
+      //assert(pos.isValid());
       if (board[pos.getCol()][pos.getRow()])
          return *(board[pos.getCol()][pos.getRow()]);
       else

@@ -30,7 +30,7 @@ public:
 	int getNmoves() { return nMoves; }
 	int getLastMove() { return lastMove; }
 	PieceType getType()            const { return BISHOP; }
-	void display(ogstream* pgout) const { pgout->drawBishop(position, fWhite); }
+	void display(ogstream* pgout) const { pgout->drawBishop(position, !fWhite); }
 	bool operator == (PieceType pt) const { if (getType() == pt) return true;  else return false; }
 	bool operator != (PieceType pt) const { if (getType() != pt) return true;  else return false; }
 	bool isMoved() { if (nMoves > 0) return true; else return false; }

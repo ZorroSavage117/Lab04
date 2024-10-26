@@ -17,7 +17,7 @@
  ***************************************************/
 void Knight::display(ogstream* pgout) const
 {
-   pgout->drawKnight(position, fWhite);
+   pgout->drawKnight(position, !fWhite);
 }
 
 
@@ -44,9 +44,9 @@ void Knight::getMoves(set<Move>& moves, const Board& board) const
         // Check if the new position is within board boundaries
         if (destPos.isValid()) 
         {
-			const Piece* pTarget = &(board[destPos]); // Get piece at new position
+			const Piece* pTarget(& (board[destPos])); // Get piece at new position
             // If there's no piece, it's a valid move
-            if (pTarget->getType() == PieceType::SPACE)
+            if ((pTarget == nullptr) || pTarget->getType() == PieceType::SPACE)
             {
 				smith = newMove.getText(currentPos, destPos, Move::MOVE);
                 moves.insert(Move(smith));

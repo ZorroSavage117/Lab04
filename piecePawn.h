@@ -30,7 +30,7 @@ public:
 	void setNMoves(int n) { nMoves = n; }
 	int getLastMove() { return lastMove; }
 	PieceType getType()            const { return PAWN; }
-	void display(ogstream* pgout) const { pgout->drawPawn(position, fWhite); }
+	void display(ogstream* pgout) const { pgout->drawPawn(position, !fWhite); }
 	bool operator == (PieceType pt) const { if (getType() == pt) return true;  else return false; }
 	bool operator != (PieceType pt) const { if (getType() != pt) return true;  else return false; }
 	bool isMoved() { if (nMoves > 0) return true; else return false; }

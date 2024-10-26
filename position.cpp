@@ -15,7 +15,7 @@
  ******************************************/
 ostream& operator << (ostream& out, const Position& rhs)
 {
-   out << "error";
+   out << rhs.getLocation();
    return out;
 }
 
