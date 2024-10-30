@@ -444,8 +444,9 @@ void Board::move(Move& move)
 		{
 			const Position posSource = move.getSource();
 			const Position posDest = move.getDest();
+			bool isWhite = board[posSource.getCol()][posSource.getRow()]->isWhite();
 			delete board[posSource.getCol()][posSource.getRow()];
-			Queen* queen = new Queen(posDest, move.getIsWhite());
+			Queen* queen = new Queen(posDest, isWhite);
 			Space* space = new Space(posSource);
 			board[posSource.getCol()][posSource.getRow()] = queen;
 			board[posDest.getCol()][posDest.getRow()] = space ;
