@@ -64,7 +64,7 @@ public:
     virtual bool isWhite()                  const { return fWhite; }
     virtual bool isMoved()                  const { return true; }
     virtual int  getNMoves()                const { return nMoves; }
-    virtual void decrementNMoves() {                      }
+    virtual void decrementNMoves() { nMoves + 1; }
     virtual const Position& getPosition()  const { return position; }
     virtual bool justMoved(int currentMove) const { return true; }
     virtual int getLastMove() const { return lastMove; }

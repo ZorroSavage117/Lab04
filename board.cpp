@@ -241,7 +241,7 @@ void Board::display(const Position& posHover, const Position& posSelect, Board* 
 	{
 		Piece* piece(&pBoard->getPiece(posSelectPrevious));
 		set<Move> moves;
-		if ((piece != nullptr) && (piece->getType() != SPACE))
+		if ((piece != nullptr) && (piece->getType() != SPACE) && ((numMoves + 1)  % 2 == piece->isWhite()))
 		{
 			set<Move> moves;
 			if (piece->getType() == PAWN)
@@ -249,6 +249,7 @@ void Board::display(const Position& posHover, const Position& posSelect, Board* 
 				Pawn pawn(*piece);
 				pawn.getMoves(moves, *this);
 				//std::cout << "Moves: " << moves.size() << std::endl;
+				pawn.decrementNMoves();
 				for (const Move& element : moves) {
 					//std::cout << element.getSmith() << std::endl;
 				}
