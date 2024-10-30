@@ -117,6 +117,11 @@ void Board::reset(bool fFree)
 	board[5][1] = new Pawn(Position(5, 1), true);
 	board[6][1] = new Pawn(Position(6, 1), true);
 	board[7][1] = new Pawn(Position(7, 1), true);
+
+	// spaces
+	for (int r = 2; r < 6; r++)
+		for (int c = 0; c < 8; c++)
+			board[c][r] = new Space(Position(c, r));
 	
 }
 
