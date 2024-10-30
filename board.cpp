@@ -117,6 +117,11 @@ void Board::reset(bool fFree)
 	board[5][1] = new Pawn(Position(5, 1), true);
 	board[6][1] = new Pawn(Position(6, 1), true);
 	board[7][1] = new Pawn(Position(7, 1), true);
+
+	// spaces
+	for (int r = 2; r < 6; r++)
+		for (int c = 0; c < 8; c++)
+			board[c][r] = new Space(Position(c, r));
 	
 }
 
@@ -236,7 +241,7 @@ void Board::display(const Position& posHover, const Position& posSelect, Board* 
 	{
 		Piece* piece(&pBoard->getPiece(posSelectPrevious));
 		set<Move> moves;
-		if ((piece != nullptr) && (piece->getType() != SPACE))
+		if ((piece != nullptr) && (piece->getType() != SPACE) && ((numMoves + 1)  % 2 == piece->isWhite()))
 		{
 			set<Move> moves;
 			if (piece->getType() == PAWN)
@@ -244,6 +249,7 @@ void Board::display(const Position& posHover, const Position& posSelect, Board* 
 				Pawn pawn(*piece);
 				pawn.getMoves(moves, *this);
 				//std::cout << "Moves: " << moves.size() << std::endl;
+				pawn.decrementNMoves();
 				for (const Move& element : moves) {
 					//std::cout << element.getSmith() << std::endl;
 				}
@@ -381,6 +387,7 @@ void Board::move(Move& move)
 			board[posRook.getCol()][posRook.getRow()] = rook;
 			board[0][0] = nullptr;
 			board[4][0] = nullptr;
+			//board[posDest.getCol()][posDest.getRow()]->decrementNMoves();
 		}
 		// black queen side castle
 		else
@@ -394,6 +401,7 @@ void Board::move(Move& move)
 			board[posRook.getCol()][posRook.getRow()] = rook;
 			board[0][7] = nullptr;
 			board[4][7] = nullptr;
+			//board[posDest.getCol()][posDest.getRow()]->decrementNMoves();
 		}
 	}
 	// move the king and the rook on the king side
@@ -415,6 +423,7 @@ void Board::move(Move& move)
 			board[posRook.getCol()][posRook.getRow()] = rook;
 			board[7][0] = nullptr;
 			board[4][0] = nullptr;
+			//board[posDest.getCol()][posDest.getRow()]->decrementNMoves();
 		}
 		// black king side castle
 		else
@@ -428,6 +437,7 @@ void Board::move(Move& move)
 			board[posRook.getCol()][posRook.getRow()] = rook;
 			board[7][7] = nullptr;
 			board[4][7] = nullptr;
+			//board[posDest.getCol()][posDest.getRow()]->decrementNMoves();
 		}
 	}
 	// move the piece
@@ -438,11 +448,13 @@ void Board::move(Move& move)
 		{
 			const Position posSource = move.getSource();
 			const Position posDest = move.getDest();
+			bool isWhite = board[posSource.getCol()][posSource.getRow()]->isWhite();
 			delete board[posSource.getCol()][posSource.getRow()];
-			Queen* queen = new Queen(posDest, move.getIsWhite());
+			Queen* queen = new Queen(posDest, isWhite);
 			Space* space = new Space(posSource);
 			board[posSource.getCol()][posSource.getRow()] = queen;
 			board[posDest.getCol()][posDest.getRow()] = space ;
+			//board[posDest.getCol()][posDest.getRow()]->decrementNMoves();
 		}
 		// if the move is not a capture
 		if (move.getCapture() == SPACE || move.getDest() == nullptr)
@@ -457,6 +469,7 @@ void Board::move(Move& move)
 				destPiece->setPosition(posSource);
 				board[posDest.getCol()][posDest.getRow()] = curMovePiece;
 				board[posSource.getCol()][posSource.getRow()] = destPiece;
+				//board[posDest.getCol()][posDest.getRow()]->decrementNMoves();
 			}
 			else
 			{
@@ -465,6 +478,7 @@ void Board::move(Move& move)
 				destPiece->setPosition(posSource);
 				board[posDest.getCol()][posDest.getRow()] = curMovePiece;
 				board[posSource.getCol()][posSource.getRow()] = destPiece;
+				//board[posDest.getCol()][posDest.getRow()]->decrementNMoves();
 			}
 
 		}
@@ -479,6 +493,7 @@ void Board::move(Move& move)
 			curMovePiece->setPosition(posDest);
 			board[posDest.getCol()][posDest.getRow()] = curMovePiece;
 			board[posSource.getCol()][posSource.getRow()] = space;
+			//board[posDest.getCol()][posDest.getRow()]->decrementNMoves();
 		}
 	}
 	// if the move is an enpassant
@@ -497,6 +512,7 @@ void Board::move(Move& move)
 			board[posDest.getCol()][posDest.getRow() - 1] = space2;
 			board[posDest.getCol()][posDest.getRow()] = curMovePiece;
 			board[posSource.getCol()][posSource.getRow()] = space;
+			//board[posDest.getCol()][posDest.getRow()]->decrementNMoves();
 		}
 		// if the move is a black enpassant
 		else
@@ -511,6 +527,7 @@ void Board::move(Move& move)
 			board[posDest.getCol()][posDest.getRow() + 1] = space2;
 			board[posDest.getCol()][posDest.getRow()] = curMovePiece;
 			board[posSource.getCol()][posSource.getRow()] = space;
+			//board[posDest.getCol()][posDest.getRow()]->decrementNMoves();
 		}
 	}
 	// update number of moves
