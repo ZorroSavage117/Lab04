@@ -105,6 +105,7 @@ public:
     bool isWhite() { return fWhite; }
     int getNmoves() { return nMoves; }
     int getLastMove() { return lastMove; }
+	void decrementNMoves() { nMoves + 1; }
     PieceType getType()            const { return SPACE; }
     // methods
     void display(ogstream* pgout)  const { assert(false); }
